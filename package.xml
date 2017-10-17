@@ -35,7 +35,7 @@
       <dir name="Filter">
        <file name="kolabfilter.1" role="doc" />
        <file name="kolabfilter.pod" role="doc" />
-       <file name="TODO" role="doc" />
+       <file name="TODO.rst" role="doc" />
       </dir> <!-- /doc/Horde/Kolab/Filter -->
      </dir> <!-- /doc/Horde/Kolab -->
     </dir> <!-- /doc/Horde -->
@@ -258,7 +258,7 @@
   <filelist>
    <install as="kolabfilter.1" name="doc/Horde/Kolab/Filter/kolabfilter.1" />
    <install as="kolabfilter.pod" name="doc/Horde/Kolab/Filter/kolabfilter.pod" />
-   <install as="TODO" name="doc/Horde/Kolab/Filter/TODO" />
+   <install as="TODO.rst" name="doc/Horde/Kolab/Filter/TODO.rst" />
    <install as="Horde/Kolab/Filter.php" name="lib/Horde/Kolab/Filter.php" />
    <install as="Horde/Kolab/Filter/Base.php" name="lib/Horde/Kolab/Filter/Base.php" />
    <install as="Horde/Kolab/Filter/Cli.php" name="lib/Horde/Kolab/Filter/Cli.php" />
