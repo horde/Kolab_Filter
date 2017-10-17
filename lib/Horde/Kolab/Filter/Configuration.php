@@ -2,7 +2,7 @@
 /**
  * Copyright 2008 Klarälvdalens Datakonsult AB
  *
- * See the enclosed file COPYING for license information (LGPL). If you did not
+ * See the enclosed file LICENSE for license information (LGPL). If you did not
  * receive this file, see
  * http://www.horde.org/licenses/lgpl21.
  *
