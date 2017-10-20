@@ -13,7 +13,7 @@
   <email>p@rdus.de</email>
   <active>yes</active>
  </lead>
- <date>2017-10-17</date>
+ <date>2017-10-20</date>
  <version>
   <release>0.2.0</release>
   <api>0.1.0</api>
@@ -94,12 +94,8 @@
     <dir name="Horde">
      <dir name="Kolab">
       <dir name="Filter">
-       <file name="kolabfilter.php" role="script">
-        <tasks:replace from="/usr/bin/env php" to="php_bin" type="pear-config" />
-       </file>
-       <file name="kolabmailboxfilter.php" role="script">
-        <tasks:replace from="/usr/bin/env php" to="php_bin" type="pear-config" />
-       </file>
+       <file name="kolabfilter.php" role="php" />
+       <file name="kolabmailboxfilter.php" role="php" />
       </dir> <!-- /script/Horde/Kolab/Filter -->
      </dir> <!-- /script/Horde/Kolab -->
     </dir> <!-- /script/Horde -->
@@ -159,7 +155,6 @@
        <file name="Autoload.php" role="test" />
        <file name="bootstrap.php" role="test" />
        <file name="ContentTestOld.php" role="test" />
-       <file name="phpunit.xml" role="test" />
        <file name="ResourceTestOld.php" role="test" />
        <file name="StoryTestCase.php" role="test" />
       </dir> <!-- /test/Horde/Kolab/Filter -->
@@ -332,7 +327,6 @@
    <install as="Horde/Kolab/Filter/Helper/AddressFilter.php" name="test/Horde/Kolab/Filter/Helper/AddressFilter.php" />
    <install as="Horde/Kolab/Filter/Integration/CliTest.php" name="test/Horde/Kolab/Filter/Integration/CliTest.php" />
    <install as="Horde/Kolab/Filter/Integration/IncomingTest.php" name="test/Horde/Kolab/Filter/Integration/IncomingTest.php" />
-   <install as="Horde/Kolab/Filter/phpunit.xml" name="test/Horde/Kolab/Filter/phpunit.xml" />
    <install as="Horde/Kolab/Filter/ResourceTestOld.php" name="test/Horde/Kolab/Filter/ResourceTestOld.php" />
    <install as="Horde/Kolab/Filter/StoryTestCase.php" name="test/Horde/Kolab/Filter/StoryTestCase.php" />
    <install as="Horde/Kolab/Filter/Unit/Helper/AddressFilter.php" name="test/Horde/Kolab/Filter/Unit/Helper/AddressFilter.php" />
@@ -545,7 +539,7 @@
    </notes>
   </release>
   <release>
-   <date>2017-10-17</date>
+   <date>2017-10-20</date>
    <version>
     <release>0.2.0</release>
     <api>0.1.0</api>
