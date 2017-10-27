@@ -1,11 +1,43 @@
 ---
 id: Kolab_Filter
 name: Kolab_Filter
-full:  Kolab server Postfix filters library
-description: |
+full: Kolab server Postfix filters library
+description: |+
   The filters provided by this package implement the Kolab
   server resource management as well as some Kolab server sender
   policies.
   
 list: dev
 type: library
+authors:
+  -
+    name: Gunnar Wrobel
+    user: wrobel
+    email: p@rdus.de
+    active: true
+    role: lead
+version:
+  release: 0.2.0
+  api: 0.1.0
+state:
+  release: beta
+  api: beta
+license:
+  identifier: LGPL-2.1
+  uri: http://www.horde.org/licenses/lgpl21
+dependencies:
+  required:
+    php: ^5.3 || ^7
+    pear:
+      pear.horde.org/Horde_Core: ^2
+      pear.horde.org/Horde_Icalendar: ^2
+      pear.horde.org/Horde_Argv: ^2
+      pear.horde.org/Horde_Exception: ^2
+      pear.horde.org/Horde_Mime: ^2
+      pear.horde.org/Horde_Util: ^2
+      pear.horde.org/Horde_Kolab_Server: ^2
+  optional:
+    pear:
+      pear.horde.org/Horde_Notification: ^2
+      pear.horde.org/Horde_Prefs: ^2
+      pear.horde.org/Horde_Test: ^2.4
