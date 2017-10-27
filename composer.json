@@ -1,5 +1,5 @@
 {
-    "name": "horde/horde-kolab-filter",
+    "name": "horde/kolab-filter",
     "description": "Postfix filters for the Kolab server",
     "type": "library",
     "homepage": "https://pear.horde.org",
