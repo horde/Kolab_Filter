@@ -347,12 +347,10 @@
    </stability>
    <license uri="http://www.horde.org/licenses/lgpl21">LGPL-2.1</license>
    <notes>
-    * Fix quoting when delivering to Dovecot.
-    * kolab/issue973 (Rewritten from shown inconveniently in kontact)
-    * kolab/issue3594 (Mail containing NUL byte not delivered, Kolab
-      Filter does not report lmtp error)
-    * kolab/issue3965 (Always accept: invitations get lost when Calendar
-      folder ist not writable for the calendar user)
+* Fix quoting when delivering to Dovecot.
+* kolab/issue973 (Rewritten from shown inconveniently in kontact)
+* kolab/issue3594 (Mail containing NUL byte not delivered, Kolab Filter does not report lmtp error)
+* kolab/issue3965 (Always accept: invitations get lost when Calendar folder ist not writable for the calendar user)
    </notes>
   </release>
   <release>
@@ -367,26 +365,17 @@
    </stability>
    <license uri="http://www.horde.org/licenses/lgpl21">LGPL-2.1</license>
    <notes>
-    * LDAP errors should be marked as temporary failures.
-    * kolab/issue3464 (kolab-filter inserts double encoded utf-8 code
-      into From: header)
-    * kolab/issue3616 (automatic replies to invitations contain
-      127.0.0.1 in Message-ID)
-    * kolab/issue3364 (manpages for kolabfilter and kolabmailboxfilter)
-    * kolab/issue3768 (Kolab server 2.2.2 resmgr doesn&apos;t copy attendee
-      status)
-    * kolab/issue3767 (Kolab server 2.2.0 resmgr creates incorrect event
-      attendee status values)
-    * kolab/issue3610 (Mail to unknown@something.example.com gets
-      accepted and yields kolabmailboxfilter exit 38)
-    * kolab/issue2499 (Notification messages by the resource manager
-      should be localized)
-    * kolab/issue2544 (Encoding problem in cancelled appointments)
-    * Reverted the fix for kolab/issue2495 (The reply to an invitation
-      with umlauts of a group account doesn&apos;t display the umlauts.) It
-      should be covered by the fix for kolab/issue2499.
-    * Added dutch translation. Submitted by Richard Bos
-      (ml@radoeka.nl).
+* LDAP errors should be marked as temporary failures.
+* kolab/issue3464 (kolab-filter inserts double encoded utf-8 code into From: header)
+* kolab/issue3616 (automatic replies to invitations contain 127.0.0.1 in Message-ID)
+* kolab/issue3364 (manpages for kolabfilter and kolabmailboxfilter)
+* kolab/issue3768 (Kolab server 2.2.2 resmgr doesn&apos;t copy attendee status)
+* kolab/issue3767 (Kolab server 2.2.0 resmgr creates incorrect event attendee status values)
+* kolab/issue3610 (Mail to unknown@something.example.com gets accepted and yields kolabmailboxfilter exit 38)
+* kolab/issue2499 (Notification messages by the resource manager should be localized)
+* kolab/issue2544 (Encoding problem in cancelled appointments)
+* Reverted the fix for kolab/issue2495 (The reply to an invitation with umlauts of a group account doesn&apos;t display the umlauts.) It should be covered by the fix for kolab/issue2499.
+* Added dutch translation. Submitted by Richard Bos (ml@radoeka.nl).
    </notes>
   </release>
   <release>
@@ -401,23 +390,14 @@
    </stability>
    <license uri="http://www.horde.org/licenses/lgpl21">LGPL-2.1</license>
    <notes>
-    * Added french translation. Submitted by Mathieu Parent
-      (mathieuparent@users.sourceforge.net).
-    * kolab-filter inserts wrong/undecodeable utf-8 code into From: header
-      (kolab/issue3464, https://issues.kolab.org/issue3464)
-    * Notification messages by the resource manager should be localized
-      (kolab/issue2499, https://issues.kolab.org/issue2499)
-    * Whole-day events broken for resources (kolab/issue3558,
-      https://www.intevation.de/roundup/kolab/issue3558)
-    * Umlauts broken in automatically accepted events (kolab/issue3568,
-      https://www.intevation.de/roundup/kolab/issue3568)
-    * kolabmailboxfilter does not accept mail for
-      user+extension@example.com (kolab/issue3521,
-      https://www.intevation.de/roundup/kolab/issue3521)
-    * php error when inviting outside of free/busy interval
-      (kolab/issue3560, https://www.intevation.de/roundup/kolab/issue3560)
-    * Resmgr eats up all memory and dies on some recuring events
-      (https://issues.kolab.org/issue3868)
+* Added french translation. Submitted by Mathieu Parent (mathieuparent@users.sourceforge.net).
+* kolab-filter inserts wrong/undecodeable utf-8 code into From: header (kolab/issue3464, https://issues.kolab.org/issue3464)
+* Notification messages by the resource manager should be localized (kolab/issue2499, https://issues.kolab.org/issue2499)
+* Whole-day events broken for resources (kolab/issue3558, https://www.intevation.de/roundup/kolab/issue3558)
+* Umlauts broken in automatically accepted events (kolab/issue3568, https://www.intevation.de/roundup/kolab/issue3568)
+* kolabmailboxfilter does not accept mail for user+extension@example.com (kolab/issue3521, https://www.intevation.de/roundup/kolab/issue3521)
+* php error when inviting outside of free/busy interval (kolab/issue3560, https://www.intevation.de/roundup/kolab/issue3560)
+* Resmgr eats up all memory and dies on some recuring events (https://issues.kolab.org/issue3868)
    </notes>
   </release>
   <release>
@@ -432,19 +412,12 @@
    </stability>
    <license uri="http://www.horde.org/licenses/lgpl21">LGPL-2.1</license>
    <notes>
-    * Resources with policy "always accept" do not work if domain != kolabhost
-      (kolab/issue3441, https://www.intevation.de/roundup/kolab/issue3441)
-    * Resource booking fails if TRANSP:TRANSPARENT in the invitation
-      (kolab/issue1336, https://www.intevation.de/roundup/kolab/issue1336)
-    * Implemented simple resource locking (kolab/issue1382,
-      https://www.intevation.de/roundup/kolab/issue1382)
-    * Kolab_Filter dies when it should accept but has no Calender folder access
-      (kolab/issue3289, https://www.intevation.de/roundup/kolab/issue3289)
-    * Delivery of invitations fails with no kolabInvitationPolicy is in ldap,
-      (kolab/issue3435, https://www.intevation.de/roundup/kolab/issue3435)
-    * Ensure that the Outlook iCal handler adds the ORGANIZER of an
-      event and fix reinjection port for rewritten invitations
-      (kolab/issue3192, https://www.intevation.de/roundup/kolab/issue3192)
+* Resources with policy "always accept" do not work if domain != kolabhost (kolab/issue3441, https://www.intevation.de/roundup/kolab/issue3441)
+* Resource booking fails if TRANSP:TRANSPARENT in the invitation (kolab/issue1336, https://www.intevation.de/roundup/kolab/issue1336)
+* Implemented simple resource locking (kolab/issue1382, https://www.intevation.de/roundup/kolab/issue1382)
+* Kolab_Filter dies when it should accept but has no Calender folder access (kolab/issue3289, https://www.intevation.de/roundup/kolab/issue3289)
+* Delivery of invitations fails with no kolabInvitationPolicy is in ldap, (kolab/issue3435, https://www.intevation.de/roundup/kolab/issue3435)
+* Ensure that the Outlook iCal handler adds the ORGANIZER of an event and fix reinjection port for rewritten invitations (kolab/issue3192, https://www.intevation.de/roundup/kolab/issue3192)
    </notes>
   </release>
   <release>
@@ -459,19 +432,13 @@
    </stability>
    <license uri="http://www.horde.org/licenses/lgpl21">LGPL-2.1</license>
    <notes>
-    * Fixed log location for fatal errors (kolab/issue3426,
-      https://www.intevation.de/roundup/kolab/issue3426)
-    * Fixed invalid function call in Content.php (kolab/issue3426,
-      https://www.intevation.de/roundup/kolab/issue3426)
-    * Fixed unnecessary large test file (kolab/issue3299,
-      https://www.intevation.de/roundup/kolab/issue3299)
-    * Extended testing.
-    * Added man page (kolab/issue3364,
-      https://www.intevation.de/roundup/kolab/issue3364)
-    * Added string translations (kolab/issue2499,
-      https://www.intevation.de/roundup/kolab/issue2499)
-    * Fixed the Outlook iCal handler (kolab/issue3192,
-      https://www.intevation.de/roundup/kolab/issue3192)
+* Fixed log location for fatal errors (kolab/issue3426, https://www.intevation.de/roundup/kolab/issue3426)
+* Fixed invalid function call in Content.php (kolab/issue3426, https://www.intevation.de/roundup/kolab/issue3426)
+* Fixed unnecessary large test file (kolab/issue3299, https://www.intevation.de/roundup/kolab/issue3299)
+* Extended testing.
+* Added man page (kolab/issue3364, https://www.intevation.de/roundup/kolab/issue3364)
+* Added string translations (kolab/issue2499, https://www.intevation.de/roundup/kolab/issue2499)
+* Fixed the Outlook iCal handler (kolab/issue3192, https://www.intevation.de/roundup/kolab/issue3192)
    </notes>
   </release>
   <release>
@@ -486,8 +453,8 @@
    </stability>
    <license uri="http://www.horde.org/licenses/lgpl21">LGPL-2.1</license>
    <notes>
-    * Fixed Dovecot delivery.
-    * Fixed copyright information.
+* Fixed Dovecot delivery.
+* Fixed copyright information.
    </notes>
   </release>
   <release>
@@ -502,11 +469,9 @@
    </stability>
    <license uri="http://www.horde.org/licenses/lgpl21">LGPL-2.1</license>
    <notes>
-    * kolab/issue3260 (kolabfilter does not allow empty sender (and therefore
-      MAILER-DAEMON))
-    * kolab/issue3256 (resmgr responses should reflect server revision in PRODID)
-    * Partial fix for kolab/issue3289 (resmgr dies when it should accept, but has
-      not Calender folder access)
+* kolab/issue3260 (kolabfilter does not allow empty sender (and therefore MAILER-DAEMON))
+* kolab/issue3256 (resmgr responses should reflect server revision in PRODID)
+* Partial fix for kolab/issue3289 (resmgr dies when it should accept, but has not Calender folder access)
    </notes>
   </release>
   <release>
@@ -521,8 +486,8 @@
    </stability>
    <license uri="http://www.horde.org/licenses/lgpl21">LGPL-2.1</license>
    <notes>
-     * Fixed retrival of the user data.
-     * Corrected some minor errors from restructuring the package.
+* Fixed retrival of the user data.
+* Corrected some minor errors from restructuring the package.
    </notes>
   </release>
   <release>
@@ -537,7 +502,7 @@
    </stability>
    <license uri="http://www.horde.org/licenses/lgpl21">LGPL-2.1</license>
    <notes>
-     * Preparations for an initial release.
+* Preparations for an initial release.
    </notes>
   </release>
   <release>
