@@ -13,7 +13,7 @@
   <email>p@rdus.de</email>
   <active>yes</active>
  </lead>
- <date>2012-11-19</date>
+ <date>2017-10-30</date>
  <version>
   <release>0.2.0</release>
   <api>0.1.0</api>
@@ -33,6 +33,7 @@
     <dir name="Horde">
      <dir name="Kolab">
       <dir name="Filter">
+       <file name="CHANGES" role="doc" />
        <file name="COPYING" role="doc" />
        <file name="kolabfilter.1" role="doc" />
        <file name="kolabfilter.pod" role="doc" />
@@ -256,6 +257,7 @@
  </dependencies>
  <phprelease>
   <filelist>
+   <install as="CHANGES" name="doc/Horde/Kolab/Filter/CHANGES" />
    <install as="COPYING" name="doc/Horde/Kolab/Filter/COPYING" />
    <install name="doc/Horde/Kolab/Filter/kolabfilter.1" as="man/man1/kolabfilter.1" />
    <install name="lib/Horde/Kolab/Test/Filter.php" as="Horde/Kolab/Test/Filter.php" />
@@ -506,7 +508,7 @@
    </notes>
   </release>
   <release>
-   <date>2012-11-19</date>
+   <date>2017-10-30</date>
    <version>
     <release>0.2.0</release>
     <api>0.1.0</api>
