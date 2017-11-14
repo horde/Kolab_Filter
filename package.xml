@@ -158,7 +158,6 @@
        <file name="Autoload.php" role="test" />
        <file name="bootstrap.php" role="test" />
        <file name="ContentTestOld.php" role="test" />
-       <file name="phpunit.xml" role="test" />
        <file name="ResourceTestOld.php" role="test" />
        <file name="StoryTestCase.php" role="test" />
       </dir> <!-- /test/Horde/Kolab/Filter -->
@@ -290,7 +289,6 @@
    <install as="Horde/Kolab/Filter/Autoload.php" name="test/Horde/Kolab/Filter/Autoload.php" />
    <install as="Horde/Kolab/Filter/bootstrap.php" name="test/Horde/Kolab/Filter/bootstrap.php" />
    <install as="Horde/Kolab/Filter/ContentTestOld.php" name="test/Horde/Kolab/Filter/ContentTestOld.php" />
-   <install as="Horde/Kolab/Filter/phpunit.xml" name="test/Horde/Kolab/Filter/phpunit.xml" />
    <install as="Horde/Kolab/Filter/ResourceTestOld.php" name="test/Horde/Kolab/Filter/ResourceTestOld.php" />
    <install as="Horde/Kolab/Filter/StoryTestCase.php" name="test/Horde/Kolab/Filter/StoryTestCase.php" />
    <install name="test/Horde/Kolab/Filter/fixtures/allday_invitation.eml" as="Horde/Kolab/Filter/fixtures/allday_invitation.eml" />
