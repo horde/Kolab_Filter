@@ -3,7 +3,7 @@
     "description": "Kolab server Postfix filters library",
     "type": "horde-library",
     "homepage": "https://www.horde.org",
-    "license": "LGPL-2.1",
+    "license": "LGPL-2.1-only",
     "authors": [
         {
             "name": "Gunnar Wrobel",
@@ -11,7 +11,7 @@
             "role": "lead"
         }
     ],
-    "version": "0.2.0",
+    
     "time": "2020-10-27",
     "repositories": [
         {
@@ -20,15 +20,15 @@
         }
     ],
     "require": {
-        "horde/horde-installer-plugin": "dev-master",
-        "php": "^5.3 || ^7",
-        "horde/core": "dev-master",
-        "horde/icalendar": "dev-master",
-        "horde/argv": "dev-master",
-        "horde/exception": "dev-master",
-        "horde/mime": "dev-master",
-        "horde/util": "dev-master",
-        "horde/kolab_server": "dev-master"
+        "horde/horde-installer-plugin": "^2 || dev-FRAMEWORK_6_0",
+        "php": "^7.4 || ^8",
+        "horde/core": "^3 || dev-FRAMEWORK_6_0",
+        "horde/icalendar": "^3 || dev-FRAMEWORK_6_0",
+        "horde/argv": "^3 || dev-FRAMEWORK_6_0",
+        "horde/exception": "^3 || dev-FRAMEWORK_6_0",
+        "horde/mime": "^3 || dev-FRAMEWORK_6_0",
+        "horde/util": "^3 || dev-FRAMEWORK_6_0",
+        "horde/kolab_server": "^3 || dev-FRAMEWORK_6_0"
     },
     "suggest": {
         "horde/notification": "^2",
