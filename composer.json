@@ -14,29 +14,23 @@
     "version": "0.2.0",
     "time": "2017-11-11",
     "repositories": [
-        {
-            "type": "pear",
-            "url": "https://pear.horde.org"
-        }
     ],
     "require": {
         "php": "^5.3 || ^7",
-        "pear-pear.horde.org/Horde_Core": "^2",
-        "pear-pear.horde.org/Horde_Icalendar": "^2",
-        "pear-pear.horde.org/Horde_Argv": "^2",
-        "pear-pear.horde.org/Horde_Exception": "^2",
-        "pear-pear.horde.org/Horde_Mime": "^2",
-        "pear-pear.horde.org/Horde_Util": "^2",
-        "pear-pear.horde.org/Horde_Kolab_Server": "^2"
+        "horde/core": "^2",
+        "horde/icalendar": "^2",
+        "horde/argv": "^2",
+        "horde/exception": "^2",
+        "horde/mime": "^2",
+        "horde/util": "^2",
+        "horde/kolab_server": "^2"
     },
     "suggest": {
-        "pear-pear.horde.org/Horde_Notification": "^2",
-        "pear-pear.horde.org/Horde_Prefs": "^2",
-        "pear-pear.horde.org/Horde_Test": "^2.4"
+        "horde/notification": "^2",
+        "horde/prefs": "^2",
+        "horde/test": "^2.4"
     },
     "replace": {
-        "pear-pear.horde.org/Horde_Kolab_Filter": "0.*",
-        "pear-horde/Horde_Kolab_Filter": "0.*"
     },
     "autoload": {
         "psr-0": {
