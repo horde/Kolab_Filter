@@ -27,6 +27,7 @@
         "horde/argv": "^3 || dev-FRAMEWORK_6_0",
         "horde/exception": "^3 || dev-FRAMEWORK_6_0",
         "horde/mime": "^3 || dev-FRAMEWORK_6_0",
+        "horde/smtp": "^2 || dev-FRAMEWORK_6_0",
         "horde/util": "^3 || dev-FRAMEWORK_6_0",
         "horde/kolab_server": "^3 || dev-FRAMEWORK_6_0"
     },
