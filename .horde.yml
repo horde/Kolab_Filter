@@ -32,6 +32,7 @@ dependencies:
       horde/argv: ^3
       horde/exception: ^3
       horde/mime: ^3
+      horde/smtp: ^2
       horde/util: ^3
       horde/kolab_server: ^3
   optional:
