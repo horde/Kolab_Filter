@@ -1,4 +1,5 @@
 <?php
+use Horde\Injector\Injector;
 /**
  * The main entry point for the Kolab_Filter application.
  *
@@ -29,11 +30,11 @@ class Horde_Kolab_Filter
     /**
      * The injector providing the dependencies for this application.
      *
-     * @var Horde_Injector
+     * @var Horde_Injector|Injector
      */
     private $_injector;
 
-    public function __construct(Horde_Injector $injector = null)
+    public function __construct(Horde_Injector|Injector $injector = null)
     {
         if ($injector === null) {
             $this->_injector = new Horde_Injector(new Horde_Injector_TopLevel());
