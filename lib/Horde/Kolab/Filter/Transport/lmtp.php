@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package Kolab_Filter
  */
@@ -6,7 +7,7 @@
 /**
  * Provides LMTP for delivering a mail.
  *
- * Copyright 2004-2008 Klarälvdalens Datakonsult AB
+ * Copyright 2004-2026 Klarälvdalens Datakonsult AB
  *
  * See the enclosed file LICENSE for license information (LGPL). If you
  * did not receive this file, see http://www.horde.org/licenses/lgpl21.
@@ -22,7 +23,7 @@ class Horde_Kolab_Filter_Transport_lmtp extends Horde_Kolab_Filter_Transport
      *
      * @return Net_LMTP The LMTP handler.
      */
-    function _createTransport()
+    public function _createTransport()
     {
         require_once __DIR__ . '/LMTPTLS.php';
 
@@ -34,8 +35,10 @@ class Horde_Kolab_Filter_Transport_lmtp extends Horde_Kolab_Filter_Transport
             $this->_params['port'] = 2003;
         }
 
-        $transport = new Net_LMTP_TLS($this->_params['host'],
-                                      $this->_params['port']);
+        $transport = new Net_LMTP_TLS(
+            $this->_params['host'],
+            $this->_params['port']
+        );
 
         return $transport;
     }

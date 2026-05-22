@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package Kolab_Filter
  */
@@ -27,7 +28,7 @@ define('EX_CONFIG', 78);      /* local configuration error */
 /**
  * Provides error handling for the Kolab server filter scripts.
  *
- * Copyright 2004-2008 Klarälvdalens Datakonsult AB
+ * Copyright 2004-2026 Klarälvdalens Datakonsult AB
  *
  * See the enclosed file LICENSE for license information (LGPL). If you
  * did not receive this file, see http://www.horde.org/licenses/lgpl21.
@@ -38,14 +39,13 @@ define('EX_CONFIG', 78);      /* local configuration error */
  */
 class Horde_Kolab_Filter_Response
 {
-
     /**
      * Constructor.
      */
-    function Horde_Kolab_Filter_Response()
+    public function Horde_Kolab_Filter_Response()
     {
         /* Set a custom PHP error handler to catch any coding errors */
-        set_error_handler(array($this, '_fatal'));
+        set_error_handler([$this, '_fatal']);
     }
 
     /**
@@ -53,7 +53,7 @@ class Horde_Kolab_Filter_Response
      *
      * @param mixed $result The reponse of the transport.
      */
-    function handle($result)
+    public function handle($result)
     {
         /* No error? Be happy and exit clean */
         if (!is_a($result, 'PEAR_Error')) {
@@ -66,7 +66,7 @@ class Horde_Kolab_Filter_Response
         if ($code & OUT_STDOUT) {
             fwrite(STDOUT, $msg);
         }
-        if  ($code & OUT_LOG || empty($code)) {
+        if ($code & OUT_LOG || empty($code)) {
             $this->_log($result);
         }
 
@@ -94,7 +94,7 @@ class Horde_Kolab_Filter_Response
      *
      * @return boolean Always false.
      */
-    function _fatal($errno, $errmsg, $filename, $linenum, $vars)
+    public function _fatal($errno, $errmsg, $filename, $linenum, $vars)
     {
         /* Ignore strict errors for now since even PEAR will raise
          * strict notices
@@ -103,11 +103,11 @@ class Horde_Kolab_Filter_Response
             return false;
         }
 
-        $fatal = array(E_ERROR,
-                       E_PARSE,
-                       E_CORE_ERROR,
-                       E_COMPILE_ERROR,
-                       E_USER_ERROR);
+        $fatal = [E_ERROR,
+            E_PARSE,
+            E_CORE_ERROR,
+            E_COMPILE_ERROR,
+            E_USER_ERROR];
 
         if (in_array($errno, $fatal)) {
             $code = OUT_STDOUT | OUT_LOG | EX_UNAVAILABLE;
@@ -128,7 +128,7 @@ class Horde_Kolab_Filter_Response
      *
      * @param PEAR_error $result The reponse of the transport.
      */
-    function _log($result)
+    public function _log($result)
     {
         global $conf;
 
@@ -150,7 +150,7 @@ class Horde_Kolab_Filter_Response
             $frames = $result->getBacktrace();
             if (count($frames) > 1) {
                 $frame = $frames[1];
-            } else if (count($frames) == 1) {
+            } elseif (count($frames) == 1) {
                 $frame = $frames[0];
             }
             if (isset($frame['file'])) {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package Kolab_Filter
  */
@@ -7,7 +8,7 @@
  * Defines a transport mechanism for delivering mails to the dovecot
  * IMAP server.
  *
- * Copyright 2008 Intevation GmbH
+ * Copyright 2008-2026 Intevation GmbH
  *
  * See the enclosed file LICENSE for license information (LGPL). If you
  * did not receive this file, see http://www.horde.org/licenses/lgpl21.
@@ -22,37 +23,37 @@ class Dovecot_LDA
      *
      * @var string
      */
-    var $_envelopeSender;
+    public $_envelopeSender;
 
     /**
      * The mail recipient.
      *
      * @var string
      */
-    var $_envelopeTo = array();
+    public $_envelopeTo = [];
 
     /**
      * Transport status.
      *
      * @var int
      */
-    var $_status;
+    public $_status;
 
     /**
      * The data that should be sent.
      *
      * @var array
      */
-    var $_data;
+    public $_data;
 
     /**
      * File handle for delivery.
      *
      * @var int
      */
-    var $_deliver_fh;
+    public $_deliver_fh;
 
-    function Dovecot_LDA()
+    public function Dovecot_LDA()
     {
         $this->_envelopeTo = false;
         $this->_status = 220;
@@ -63,7 +64,7 @@ class Dovecot_LDA
      *
      * @return boolean|PEAR_Error Always true.
      */
-    function connect()
+    public function connect()
     {
         global $conf;
 
@@ -78,7 +79,7 @@ class Dovecot_LDA
      *
      * @return boolean Always true.
      */
-    function disconnect()
+    public function disconnect()
     {
         return true;
     }
@@ -89,7 +90,7 @@ class Dovecot_LDA
      *
      * @return boolean Always true.
      */
-    function mailFrom($sender)
+    public function mailFrom($sender)
     {
         $this->_envelopeSender = $sender;
         $this->_status = 250;
@@ -101,7 +102,7 @@ class Dovecot_LDA
      *
      * @return boolean Always true.
      */
-    function rcptTo($rcpt)
+    public function rcptTo($rcpt)
     {
         $this->_envelopeTo[] = $rcpt;
         $this->_status = 250;
@@ -115,7 +116,7 @@ class Dovecot_LDA
      *
      * @return boolean|PEAR_Error True if the command succeeded.
      */
-    function _put($cmd)
+    public function _put($cmd)
     {
         if ($cmd == "DATA") {
             $this->_status = 354;
@@ -134,14 +135,17 @@ class Dovecot_LDA
      * @return boolean|PEAR_Error True if the current status matches
      * the expectation.
      */
-    function _parseResponse($code)
+    public function _parseResponse($code)
     {
         if ($code) {
             if ($this->_status == $code) {
                 return true;
             } else {
-                return PEAR::raiseError(sprintf("Dovecot LDA status is %s though %s was expected!.",
-                                                $this->_status, $code));
+                return PEAR::raiseError(sprintf(
+                    "Dovecot LDA status is %s though %s was expected!.",
+                    $this->_status,
+                    $code
+                ));
             }
         } else {
             return $this->status;
@@ -155,9 +159,9 @@ class Dovecot_LDA
      *
      * @return boolean|PEAR_Error True if successful.
      */
-    function _send($data)
+    public function _send($data)
     {
-        $errors = array();
+        $errors = [];
         if ($data == ".\r\n" or $data == "\r\n.\r\n") {
             foreach ($this->_envelopeTo as $recipient) {
                 $result = $this->_start_deliver($recipient);
@@ -186,8 +190,10 @@ class Dovecot_LDA
                 foreach ($errors as $error) {
                     $msg[] = $error->getMessage();
                 }
-                return PEAR::raiseError(sprintf("Dovecot delivery failed: %s",
-                                                join(', ', $msg)));
+                return PEAR::raiseError(sprintf(
+                    "Dovecot delivery failed: %s",
+                    join(', ', $msg)
+                ));
             }
         } else {
             $this->_data[] = $data;
@@ -203,7 +209,7 @@ class Dovecot_LDA
      *
      * @return boolean|PEAR_Error True if successful.
      */
-    function _start_deliver($recipient)
+    public function _start_deliver($recipient)
     {
         global $conf;
 
@@ -211,8 +217,8 @@ class Dovecot_LDA
 
         $deliver = $conf['kolab']['filter']['dovecot_deliver'];
 
-        $this->_deliver_fh = popen($deliver . ' -f "' . $this->_envelopeSender .
-                                   '" -d "' . $recipient . '"', "w");
+        $this->_deliver_fh = popen($deliver . ' -f "' . $this->_envelopeSender
+                                   . '" -d "' . $recipient . '"', "w");
         if ($this->_deliver_fh === false) {
             return PEAR::raiseError('Failed to connect to the dovecot delivery tool!');
         }
@@ -224,7 +230,7 @@ class Dovecot_LDA
      *
      * @return boolean|PEAR_Error True if successful.
      */
-    function _stop_deliver()
+    public function _stop_deliver()
     {
         Horde::log("Stoping Dovecot delivery process ...", 'DEBUG');
         $retval = pclose($this->_deliver_fh);
@@ -240,7 +246,7 @@ class Dovecot_LDA
      *
      * @return boolean|PEAR_Error True if successful.
      */
-    function _deliver()
+    public function _deliver()
     {
         foreach ($this->_data as $line) {
             if (!fwrite($this->_deliver_fh, $line)) {

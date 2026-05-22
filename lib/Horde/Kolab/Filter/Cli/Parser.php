@@ -1,4 +1,5 @@
 <?php
+
 /**
  * A parser variant that does not automatically exit on a parser error.
  *
@@ -13,7 +14,7 @@
 /**
  * A parser variant that does not automatically exit on a parser error.
  *
- * Copyright 2008 Klarälvdalens Datakonsult AB
+ * Copyright 2008-2026 Klarälvdalens Datakonsult AB
  *
  * See the enclosed file LICENSE for license information (LGPL). If you did not
  * receive this file, see

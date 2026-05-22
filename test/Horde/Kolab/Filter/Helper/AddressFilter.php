@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Rewrites address information in a mail template.
  *
@@ -14,7 +15,7 @@
 /**
  * Rewrites address information in a mail template.
  *
- * Copyright 2010-2017 Horde LLC (http://www.horde.org/)
+ * Copyright 2010-2026 Horde LLC (http://www.horde.org/)
  *
  * See the enclosed file LICENSE for license information (LGPL). If you
  * did not receive this file, see http://www.horde.org/licenses/lgpl21.
@@ -25,8 +26,7 @@
  * @author     Gunnar Wrobel <wrobel@pardus.de>
  * @license    http://www.horde.org/licenses/lgpl21 LGPL 2.1
  */
-class Horde_Kolab_Filter_Helper_AddressFilter
-extends php_user_filter
+class Horde_Kolab_Filter_Helper_AddressFilter extends php_user_filter
 {
     public $_previous = '';
 
@@ -36,8 +36,8 @@ extends php_user_filter
 
     public function onCreate()
     {
-        $this->_sender = isset($this->params['sender']) ? $this->params['sender'] : '';
-        $this->_recipient = isset($this->params['recipient']) ? $this->params['recipient'] : '';
+        $this->_sender = $this->params['sender'] ?? '';
+        $this->_recipient = $this->params['recipient'] ?? '';
         $this->_previous = '';
     }
 

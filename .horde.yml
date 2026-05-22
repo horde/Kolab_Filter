@@ -43,3 +43,5 @@ dependencies:
   dev:
     composer:
       horde/test: ^3
+keywords: []
+vendor: horde

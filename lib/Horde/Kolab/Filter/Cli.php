@@ -1,4 +1,5 @@
 <?php
+
 /**
  * The command line handling for the Kolab_Filter package.
  *
@@ -13,7 +14,7 @@
 /**
  * The command line handling for the Kolab_Filter package.
  *
- * Copyright 2008 Klarälvdalens Datakonsult AB
+ * Copyright 2008-2026 Klarälvdalens Datakonsult AB
  *
  * See the enclosed file LICENSE for license information (LGPL). If you did not
  * receive this file, see
@@ -53,57 +54,57 @@ class Horde_Kolab_Filter_Cli
     public function __construct()
     {
         $this->_parser = new Horde_Kolab_Filter_Cli_Parser(
-            array('optionList' =>
-                  array(
+            ['optionList'
+                  => [
                       new Horde_Argv_Option(
                           '-s',
                           '--sender',
-                          array(
+                          [
                               'help' => 'The message sender.',
                               'type' => 'string',
-                              'nargs' => 1
-                          )
+                              'nargs' => 1,
+                          ]
                       ),
                       new Horde_Argv_Option(
                           '-r',
                           '--recipient',
-                          array(
+                          [
                               'help' => 'A message recipient.',
                               'action' => 'append',
-                              'type' => 'string'
-                          )
+                              'type' => 'string',
+                          ]
                       ),
                       new Horde_Argv_Option(
                           '-H',
                           '--host',
-                          array(
-                              'help' => 'The host running this script.'
-                          )
+                          [
+                              'help' => 'The host running this script.',
+                          ]
                       ),
                       new Horde_Argv_Option(
                           '-c',
                           '--client',
-                          array(
-                              'help' => 'The client sending the message.'
-                          )
+                          [
+                              'help' => 'The client sending the message.',
+                          ]
                       ),
                       new Horde_Argv_Option(
                           '-u',
                           '--user',
-                          array(
+                          [
                               'help' => 'ID of the currently authenticated user.',
-                              'default' => ''
-                          )
+                              'default' => '',
+                          ]
                       ),
                       new Horde_Argv_Option(
                           '-C',
                           '--config',
-                          array(
-                              'help' => 'Path to the configuration file for this filter.'
-                          )
-                      )
-                  )
-            )
+                          [
+                              'help' => 'Path to the configuration file for this filter.',
+                          ]
+                      ),
+                  ],
+            ]
         );
     }
 
@@ -115,7 +116,7 @@ class Horde_Kolab_Filter_Cli
     public function parse()
     {
         try {
-            list($this->_options, $this->_arguments) = $this->_parser->parseArgs();
+            [$this->_options, $this->_arguments] = $this->_parser->parseArgs();
         } catch (InvalidArgumentException $e) {
             throw new Horde_Kolab_Filter_Exception_Usage(
                 $e->getMessage() . "\n\n" . $this->_parser->getUsage()

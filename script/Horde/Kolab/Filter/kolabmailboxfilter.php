@@ -1,10 +1,11 @@
 #!/usr/bin/env php
 <?php
+
 /**
  *  A filter for incoming mail on a Kolab Server. It checks the
  *  messages for iCal data and handles automatic invitations.
  *
- * Copyright 2004-2008 Klarälvdalens Datakonsult AB
+ * Copyright 2004-2026 Klarälvdalens Datakonsult AB
  *
  * See the enclosed file LICENSE for license information (LGPL). If you
  * did not receive this file, see http://www.horde.org/licenses/lgpl21.

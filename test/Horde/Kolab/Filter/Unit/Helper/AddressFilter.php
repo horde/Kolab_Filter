@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Test the address rewriting filter.
  *
@@ -14,7 +15,7 @@
 /**
  * Test the address rewriting filter.
  *
- * Copyright 2010-2017 Horde LLC (http://www.horde.org/)
+ * Copyright 2010-2026 Horde LLC (http://www.horde.org/)
  *
  * See the enclosed file LICENSE for license information (LGPL). If you
  * did not receive this file, see http://www.horde.org/licenses/lgpl21.
@@ -24,9 +25,9 @@
  * @subpackage UnitTests
  * @author     Gunnar Wrobel <wrobel@pardus.de>
  * @license    http://www.horde.org/licenses/lgpl21 LGPL 2.1
+ * @coversNothing
  */
-class Horde_Kolab_Filter_Unit_Helper_AddressFilterTest
-extends PHPUnit_Framework_TestCase
+class Horde_Kolab_Filter_Unit_Helper_AddressFilterTest extends PHPUnit_Framework_TestCase
 {
     public function testFilter()
     {
@@ -64,7 +65,7 @@ extends PHPUnit_Framework_TestCase
         fputs($fp, "hello %1\$s\n");
         rewind($fp);
         stream_filter_register('addresses', 'Horde_Kolab_Filter_Helper_AddressFilter');
-        stream_filter_append($fp, 'addresses', STREAM_FILTER_READ, array('sender' => 'sender'));
+        stream_filter_append($fp, 'addresses', STREAM_FILTER_READ, ['sender' => 'sender']);
         $this->assertEquals("hello sender\n", stream_get_contents($fp));
     }
 
@@ -74,7 +75,7 @@ extends PHPUnit_Framework_TestCase
         fputs($fp, "hello %2\$s\n");
         rewind($fp);
         stream_filter_register('addresses', 'Horde_Kolab_Filter_Helper_AddressFilter');
-        stream_filter_append($fp, 'addresses', STREAM_FILTER_READ, array('recipient' => 'recipient'));
+        stream_filter_append($fp, 'addresses', STREAM_FILTER_READ, ['recipient' => 'recipient']);
         $this->assertEquals("hello recipient\n", stream_get_contents($fp));
     }
 
@@ -95,12 +96,12 @@ extends PHPUnit_Framework_TestCase
 
     public function provideBrokenParameters()
     {
-        return array(
-            array("%"),
-            array("%1"),
-            array("%2"),
-            array("%2\$"),
-            array("%2\$\ns"),
-        );
+        return [
+            ["%"],
+            ["%1"],
+            ["%2"],
+            ["%2\$"],
+            ["%2\$\ns"],
+        ];
     }
 }

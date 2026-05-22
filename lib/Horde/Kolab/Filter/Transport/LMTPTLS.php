@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package Kolab_Filter
  */
@@ -6,7 +7,7 @@
 /**
  * Extended LMTP class with support for TLS.
  *
- * Copyright 2008-2017 Horde LLC (http://www.horde.org/)
+ * Copyright 2008-2026 Horde LLC (http://www.horde.org/)
  *
  * See the enclosed file LICENSE for license information (LGPL). If you
  * did not receive this file, see http://www.horde.org/licenses/lgpl21.
@@ -14,8 +15,8 @@
  * @author  Gunnar Wrobel <wrobel@pardus.de>
  * @package Kolab_Filter
  */
-class Net_LMTP_TLS extends Net_LMTP {
-
+class Net_LMTP_TLS extends Net_LMTP
+{
     /**
      * Attempt to do LMTP authentication.
      *
@@ -28,7 +29,7 @@ class Net_LMTP_TLS extends Net_LMTP {
      *               kind of failure, or true on success.
      * @access public
      */
-    function auth($uid, $pwd , $method = '')
+    public function auth($uid, $pwd, $method = '')
     {
         if (!isset($this->_esmtp['STARTTLS'])) {
             return PEAR::raiseError('LMTP server does not support authentication');
@@ -55,7 +56,7 @@ class Net_LMTP_TLS extends Net_LMTP {
          * If no method has been specified, get the name of the best supported
          * method advertised by the LMTP server.
          */
-        if (empty($method) || $method === true ) {
+        if (empty($method) || $method === true) {
             if (PEAR::isError($method = $this->_getBestAuthMethod())) {
                 /* Return the PEAR_Error object from _getBestAuthMethod(). */
                 return $method;
@@ -77,7 +78,7 @@ class Net_LMTP_TLS extends Net_LMTP {
             case 'PLAIN':
                 $result = $this->_authPlain($uid, $pwd);
                 break;
-            default :
+            default:
                 $result = new PEAR_Error("$method is not a supported authentication method");
                 break;
         }

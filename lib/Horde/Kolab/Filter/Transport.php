@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package Kolab_Filter
  */
@@ -6,7 +7,7 @@
 /**
  * Provides a delivery mechanism for a mail message.
  *
- * Copyright 2004-2008 Klarälvdalens Datakonsult AB
+ * Copyright 2004-2026 Klarälvdalens Datakonsult AB
  *
  * See the enclosed file LICENSE for license information (LGPL). If you
  * did not receive this file, see http://www.horde.org/licenses/lgpl21.
@@ -22,26 +23,26 @@ class Horde_Kolab_Filter_Transport
      *
      * @var array
      */
-    var $_params;
+    public $_params;
 
     /**
      * The transport class delivering the message.
      *
      * @var mixed
      */
-    var $_transport;
+    public $_transport;
 
     /**
      * Internal marker to indicate if we received a new line.
      *
      * @var boolean
      */
-    var $_got_newline;
+    public $_got_newline;
 
     /**
      * Constructor.
      */
-    function __construct($params)
+    public function __construct($params)
     {
         $this->_params = $params;
         $this->_transport = false;
@@ -64,7 +65,7 @@ class Horde_Kolab_Filter_Transport
      *                                 Horde_Kolab_Filter_Transport instance, or
      *                                 false on an error.
      */
-    function &factory($driver, $params = array())
+    public function &factory($driver, $params = [])
     {
         $class = 'Horde_Kolab_Filter_Transport_' . $driver;
         if (!class_exists($class)) {
@@ -74,14 +75,17 @@ class Horde_Kolab_Filter_Transport
             $transport = new $class($params);
             return $transport;
         }
-        return PEAR::raiseError(sprintf('No such class \"%s\"', $class),
-                                OUT_LOG | EX_SOFTWARE);
+        return PEAR::raiseError(
+            sprintf('No such class \"%s\"', $class),
+            OUT_LOG | EX_SOFTWARE
+        );
     }
 
     /**
      * Create the transport class.
      */
-    function createTransport() {
+    public function createTransport()
+    {
         $this->_transport = $this->_createTransport();
     }
 
@@ -93,7 +97,7 @@ class Horde_Kolab_Filter_Transport
      *
      * @return boolean|PEAR_Error True on success, a PEAR_Error otherwise.
      */
-    function start($sender, $recips)
+    public function start($sender, $recips)
     {
         $this->createTransport();
 
@@ -106,29 +110,35 @@ class Horde_Kolab_Filter_Transport
             return $result;
         }
 
-        if (isset($this->_params['user']) && isset($this->_params['pass']) ) {
+        if (isset($this->_params['user']) && isset($this->_params['pass'])) {
             $this->_transport->auth($this->_params['user'], $this->_params['pass'], 'PLAIN');
         }
 
         $result = $this->_transport->mailFrom($sender);
         if (is_a($result, 'PEAR_Error')) {
             $resp = $this->_transport->getResponse();
-            $error = PEAR::raiseError(sprintf('Failed to set sender: %s, code=%s',
-                                              $resp[1], $resp[0]), $resp[0]);
+            $error = PEAR::raiseError(sprintf(
+                'Failed to set sender: %s, code=%s',
+                $resp[1],
+                $resp[0]
+            ), $resp[0]);
             return $this->rewriteCode($error);
         }
 
         if (!is_array($recips)) {
-            $recips = array($recips);
+            $recips = [$recips];
         }
 
-        $reciperrors = array();
+        $reciperrors = [];
         foreach ($recips as $recip) {
             $result = $this->_transport->rcptTo($recip);
             if (is_a($result, 'PEAR_Error')) {
                 $resp = $this->_transport->getResponse();
-                $reciperrors[] = PEAR::raiseError(sprintf('Failed to set recipient: %s, code=%s',
-                                                          $resp[1], $resp[0]), $resp[0]);
+                $reciperrors[] = PEAR::raiseError(sprintf(
+                    'Failed to set recipient: %s, code=%s',
+                    $resp[1],
+                    $resp[0]
+                ), $resp[0]);
             }
         }
 
@@ -139,16 +149,21 @@ class Horde_Kolab_Filter_Transport
                 return $this->rewriteCode($reciperrors[0]);
             }
             /* Multiple errors */
-            $error = $this->createErrorObject($reciperrors,
-                                              'Delivery to all recipients failed!');
+            $error = $this->createErrorObject(
+                $reciperrors,
+                'Delivery to all recipients failed!'
+            );
             return $this->rewriteCode($error);
         }
 
         $result = $this->_transport->_put('DATA');
         if (is_a($result, 'PEAR_Error')) {
             $resp = $this->_transport->getResponse();
-            $error = PEAR::raiseError(sprintf('Failed to send DATA: %s, code=%s',
-                                              $resp[1], $resp[0]), $resp[0]);
+            $error = PEAR::raiseError(sprintf(
+                'Failed to send DATA: %s, code=%s',
+                $resp[1],
+                $resp[0]
+            ), $resp[0]);
             return $this->rewriteCode($error);
         }
 
@@ -158,8 +173,10 @@ class Horde_Kolab_Filter_Transport
         }
 
         if (!empty($reciperrors)) {
-            return $this->createErrorObject($reciperrors,
-                                            'Delivery to some recipients failed!');
+            return $this->createErrorObject(
+                $reciperrors,
+                'Delivery to some recipients failed!'
+            );
         }
         return true;
     }
@@ -172,7 +189,7 @@ class Horde_Kolab_Filter_Transport
      *
      * @return PEAR_Error The combined error.
      */
-    function createErrorObject($reciperrors, $msg = null)
+    public function createErrorObject($reciperrors, $msg = null)
     {
         /* Return the lowest errorcode to not bounce more
          * than we have to
@@ -197,26 +214,26 @@ class Horde_Kolab_Filter_Transport
      *
      * @param string $data   Mail message data.
      */
-    function quotedataline(&$data)
+    public function quotedataline(&$data)
     {
         /*
          * Change Unix (\n) and Mac (\r) linefeeds into Internet-standard CRLF
          * (\r\n) linefeeds.
          */
-        $data = preg_replace(array('/(?<!\r)\n/','/\r(?!\n)/'), "\r\n", $data);
+        $data = preg_replace(['/(?<!\r)\n/','/\r(?!\n)/'], "\r\n", $data);
 
         /*
          * Because a single leading period (.) signifies an end to the data,
          * legitimate leading periods need to be "doubled" (e.g. '..').
          */
         if ($this->_got_newline && !empty($data) && $data[0] == '.') {
-            $data = '.'.$data;
+            $data = '.' . $data;
         }
 
         $data = str_replace("\n.", "\n..", $data);
         $len = strlen($data);
         if ($len > 0) {
-            $this->_got_newline = ( $data[$len-1] == "\n" );
+            $this->_got_newline = ($data[$len - 1] == "\n");
         }
     }
 
@@ -227,13 +244,17 @@ class Horde_Kolab_Filter_Transport
      *
      * @return boolean|PEAR_Error True on success.
      */
-    function data($data) {
+    public function data($data)
+    {
         $this->quotedataline($data);
         $result = $this->_transport->_send($data);
         if (is_a($result, 'PEAR_Error')) {
             $resp = $this->_transport->getResponse();
-            $error = PEAR::raiseError(sprintf('Failed to send message data: %s, code=%s',
-                                              $resp[1], $resp[0]), $resp[0]);
+            $error = PEAR::raiseError(sprintf(
+                'Failed to send message data: %s, code=%s',
+                $resp[1],
+                $resp[0]
+            ), $resp[0]);
             return $this->rewriteCode($error);
         }
         return true;
@@ -244,7 +265,7 @@ class Horde_Kolab_Filter_Transport
      *
      * @return boolean|PEAR_Error True on success.
      */
-    function end()
+    public function end()
     {
         if ($this->_got_newline) {
             $dot = ".\r\n";
@@ -255,8 +276,11 @@ class Horde_Kolab_Filter_Transport
         $result = $this->_transport->_send($dot);
         if (is_a($result, 'PEAR_Error')) {
             $resp = $this->_transport->getResponse();
-            $error = PEAR::raiseError(sprintf('Failed to send message end: %s, code=%s',
-                                              $resp[1], $resp[0]), $resp[0]);
+            $error = PEAR::raiseError(sprintf(
+                'Failed to send message end: %s, code=%s',
+                $resp[1],
+                $resp[0]
+            ), $resp[0]);
             return $this->rewriteCode($error);
         }
         $result = $this->_transport->_parseResponse(250);
@@ -275,9 +299,9 @@ class Horde_Kolab_Filter_Transport
      *
      * @return PEAR_error An error with a rewritten error code.
      */
-    function rewriteCode($result)
+    public function rewriteCode($result)
     {
-        list($resultcode, $resultmessage) = $this->_transport->getResponse();
+        [$resultcode, $resultmessage] = $this->_transport->getResponse();
         if ($resultcode < 500) {
             $code = EX_TEMPFAIL;
         } else {
