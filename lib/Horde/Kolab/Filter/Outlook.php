@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright 2004-2008 Klarälvdalens Datakonsult AB
+ * Copyright 2004-2026 Klarälvdalens Datakonsult AB
  *
  * See the enclosed file LICENSE for license information (LGPL). If you
  * did not receive this file, see http://www.horde.org/licenses/lgpl21.
@@ -19,7 +20,6 @@
  */
 class Kolab_Filter_Outlook
 {
-
     /**
      * Returns a parsed MIME message
      *
@@ -27,13 +27,13 @@ class Kolab_Filter_Outlook
      *
      * @return array An array with the MIME parsed headers and body.
      */
-    function _mimeParse(&$text)
+    public function _mimeParse(&$text)
     {
         /* Taken from Horde's MIME/Structure.php */
         require_once 'Mail/mimeDecode.php';
 
         /* Set up the options for the mimeDecode class. */
-        $decode_args = array();
+        $decode_args = [];
         $decode_args['include_bodies'] = true;
         $decode_args['decode_bodies'] = false;
         $decode_args['decode_headers'] = false;
@@ -46,7 +46,7 @@ class Kolab_Filter_Outlook
         /* Put the object into imap_parsestructure() form. */
         MIME_Structure::_convertMimeDecodeData($structure);
 
-        return array($structure->headers, $ret = &MIME_Structure::parse($structure));
+        return [$structure->headers, $ret = &MIME_Structure::parse($structure)];
     }
 
     /**
@@ -56,7 +56,7 @@ class Kolab_Filter_Outlook
      * @param MIME_Headers  $msg_header  A link to the MIME header handler.
      * @param array         $headerarray The list of current headers.
      */
-    function _copyHeader($name, &$msg_headers, &$headerarray)
+    public function _copyHeader($name, &$msg_headers, &$headerarray)
     {
         $lname = Horde_String::lower($name);
         if (array_key_exists($lname, $headerarray)) {
@@ -78,7 +78,7 @@ class Kolab_Filter_Outlook
      * @param string        $icaltext  The ical message.
      * @param MIME_Headers  $from      The message sender.
      */
-    function _addOrganizer(&$icaltxt, $from)
+    public function _addOrganizer(&$icaltxt, $from)
     {
         global $conf;
 
@@ -90,20 +90,28 @@ class Kolab_Filter_Outlook
 
         $iCal = new Horde_Icalendar();
         $iCal->parsevCalendar($icaltxt);
-        $vevent =& $iCal->findComponent('VEVENT');
+        $vevent = & $iCal->findComponent('VEVENT');
         if ($vevent) {
             $organizer = $vevent->getAttribute('ORGANIZER', true);
             if (is_a($organizer, 'PEAR_Error')) {
                 $adrs = imap_rfc822_parse_adrlist($from, $email_domain);
                 if (count($adrs) > 0) {
-                    $org_email = 'mailto:'.$adrs[0]->mailbox.'@'.$adrs[0]->host;
+                    $org_email = 'mailto:' . $adrs[0]->mailbox . '@' . $adrs[0]->host;
                     $org_name  = $adrs[0]->personal;
                     if ($org_name) {
-                        $vevent->setAttribute('ORGANIZER', $org_email,
-                                              array( 'CN' => $org_name), false);
+                        $vevent->setAttribute(
+                            'ORGANIZER',
+                            $org_email,
+                            [ 'CN' => $org_name],
+                            false
+                        );
                     } else {
-                        $vevent->setAttribute('ORGANIZER', $org_email,
-                        array(), false);
+                        $vevent->setAttribute(
+                            'ORGANIZER',
+                            $org_email,
+                            [],
+                            false
+                        );
                     }
                     Horde::log(sprintf("Adding missing organizer '%s <%s>' to iCal.", $org_name, $org_email), 'DEBUG');
                     $icaltxt = $iCal->exportvCalendar();
@@ -123,21 +131,22 @@ class Kolab_Filter_Outlook
      *
      * @return string The text with umlauts replaced.
      */
-    function _recodeToAscii( $text ) {
-        $text = str_replace( ('æ'), 'ae', $text );
-        $text = str_replace( ('ø'), 'oe', $text );
-        $text = str_replace( ('å'), 'aa', $text );
-        $text = str_replace( ('ä'), 'ae', $text );
-        $text = str_replace( ('ö'), 'oe', $text );
-        $text = str_replace( ('ü'), 'ue', $text );
-        $text = str_replace( ('ß'), 'ss', $text );
+    public function _recodeToAscii($text)
+    {
+        $text = str_replace(('æ'), 'ae', $text);
+        $text = str_replace(('ø'), 'oe', $text);
+        $text = str_replace(('å'), 'aa', $text);
+        $text = str_replace(('ä'), 'ae', $text);
+        $text = str_replace(('ö'), 'oe', $text);
+        $text = str_replace(('ü'), 'ue', $text);
+        $text = str_replace(('ß'), 'ss', $text);
 
-        $text = str_replace( ('Æ'), 'Ae', $text );
-        $text = str_replace( ('Ø'), 'Oe', $text );
-        $text = str_replace( ('Å'), 'Aa', $text );
-        $text = str_replace( ('Ä'), 'Ae', $text );
-        $text = str_replace( ('Ö'), 'Oe', $text );
-        $text = str_replace( ('Ü'), 'Ue', $text );
+        $text = str_replace(('Æ'), 'Ae', $text);
+        $text = str_replace(('Ø'), 'Oe', $text);
+        $text = str_replace(('Å'), 'Aa', $text);
+        $text = str_replace(('Ä'), 'Ae', $text);
+        $text = str_replace(('Ö'), 'Oe', $text);
+        $text = str_replace(('Ü'), 'Ue', $text);
 
         return $text;
     }
@@ -154,26 +163,37 @@ class Kolab_Filter_Outlook
      *
      * @return boolena|PEAR_Error True if the message was successfully rewritten.
      */
-    function embedICal($fqhostname, $sender, $recipients, $origfrom, $subject,
-               $tmpfname, $transport)
-    {
+    public function embedICal(
+        $fqhostname,
+        $sender,
+        $recipients,
+        $origfrom,
+        $subject,
+        $tmpfname,
+        $transport
+    ) {
         Horde::log(sprintf("Encapsulating iCal message forwarded by %s", $sender), 'DEBUG');
 
-        $forwardtext = "This is an invitation forwarded by outlook and\n".
-            "was rectified by the Kolab server.\n".
-            "The invitation was originally sent by\n%s.\n\n".
-            "Diese Einladung wurde von Outlook weitergeleitet\n".
-            "und vom Kolab-Server in gute Form gebracht.\n".
-            "Die Einladung wurde ursprünglich von\n%s geschickt.\n";
+        $forwardtext = "This is an invitation forwarded by outlook and\n"
+            . "was rectified by the Kolab server.\n"
+            . "The invitation was originally sent by\n%s.\n\n"
+            . "Diese Einladung wurde von Outlook weitergeleitet\n"
+            . "und vom Kolab-Server in gute Form gebracht.\n"
+            . "Die Einladung wurde ursprünglich von\n%s geschickt.\n";
 
         // Read in message text
         $requestText = '';
         $handle = @fopen($tmpfname, "r");
         if ($handle === false) {
             $msg = $php_errormsg;
-            return PEAR::raiseError(sprintf("Error: Could not open %s for writing: %s",
-                                            $tmpfname, $msg),
-                                    OUT_LOG | EX_IOERR);
+            return PEAR::raiseError(
+                sprintf(
+                    "Error: Could not open %s for writing: %s",
+                    $tmpfname,
+                    $msg
+                ),
+                OUT_LOG | EX_IOERR
+            );
         }
         while (!feof($handle)) {
             $requestText .= fread($handle, 8192);
@@ -181,7 +201,7 @@ class Kolab_Filter_Outlook
         fclose($handle);
 
         // Parse existing message
-        list( $headers, $mime) = Kolab_Filter_Outlook::_mimeParse($requestText);
+        [$headers, $mime] = Kolab_Filter_Outlook::_mimeParse($requestText);
         $parts = $mime->contentTypeMap();
         if (count($parts) != 1 || $parts[1] != 'text/calendar') {
             Horde::log("Message does not contain exactly one toplevel text/calendar part, passing through.", 'DEBUG');
@@ -192,28 +212,31 @@ class Kolab_Filter_Outlook
         // Construct new MIME message with original message attached
         $toppart = new MIME_Message();
         $dorigfrom = Mail_mimeDecode::_decodeHeader($origfrom);
-        $textpart = new MIME_Part('text/plain', sprintf($forwardtext,$dorigfrom,$dorigfrom), 'UTF-8' );
+        $textpart = new MIME_Part('text/plain', sprintf($forwardtext, $dorigfrom, $dorigfrom), 'UTF-8');
         $ical_txt = $basepart->transferDecode();
         Kolab_Filter_Outlook::_addOrganizer($ical_txt, $dorigfrom);
-        $msgpart = new MIME_Part($basepart->getType(), Kolab_Filter_Outlook::_recodeToAscii($ical_txt),
-                                  $basepart->getCharset() );
+        $msgpart = new MIME_Part(
+            $basepart->getType(),
+            Kolab_Filter_Outlook::_recodeToAscii($ical_txt),
+            $basepart->getCharset()
+        );
 
         $toppart->addPart($textpart);
         $toppart->addPart($msgpart);
 
         // Build the reply headers.
         $msg_headers = new MIME_Headers();
-        Kolab_Filter_Outlook::_copyHeader( 'Received', $msg_headers, $headers );
+        Kolab_Filter_Outlook::_copyHeader('Received', $msg_headers, $headers);
         //$msg_headers->addReceivedHeader();
         $msg_headers->addMessageIdHeader();
-        Kolab_Filter_Outlook::_copyHeader( 'Date', $msg_headers, $headers );
-        Kolab_Filter_Outlook::_copyHeader( 'Resent-Date', $msg_headers, $headers );
-        Kolab_Filter_Outlook::_copyHeader( 'Subject', $msg_headers, $headers );
+        Kolab_Filter_Outlook::_copyHeader('Date', $msg_headers, $headers);
+        Kolab_Filter_Outlook::_copyHeader('Resent-Date', $msg_headers, $headers);
+        Kolab_Filter_Outlook::_copyHeader('Subject', $msg_headers, $headers);
         $msg_headers->addHeader('From', $sender);
         $msg_headers->addHeader('To', join(', ', $recipients));
         $msg_headers->addHeader('X-Kolab-Forwarded', 'TRUE');
         $msg_headers->addMIMEHeaders($toppart);
-        Kolab_Filter_Outlook::_copyHeader( 'Content-Transfer-Encoding', $msg_headers, $headers );
+        Kolab_Filter_Outlook::_copyHeader('Content-Transfer-Encoding', $msg_headers, $headers);
 
         if (is_object($msg_headers)) {
             $headerArray = $toppart->encode($msg_headers->toArray(), $toppart->getCharset());
@@ -224,7 +247,7 @@ class Kolab_Filter_Outlook
         return Kolab_Filter_Outlook::_inject($toppart, $recipients, $msg_headers, $sender, $transport);
     }
 
-    function _inject(&$toppart, $recipients, $msg_headers, $sender, $transport)
+    public function _inject(&$toppart, $recipients, $msg_headers, $sender, $transport)
     {
         global $conf;
 
@@ -239,9 +262,11 @@ class Kolab_Filter_Outlook
             $port = 10025;
         }
 
-        $transport = &Horde_Kolab_Filter_Transport::factory($transport,
-                                               array('host' => $host,
-                                                     'port' => $port));
+        $transport = &Horde_Kolab_Filter_Transport::factory(
+            $transport,
+            ['host' => $host,
+                'port' => $port]
+        );
 
         $result = $transport->start($sender, $recipients);
         if (is_a($result, 'PEAR_Error')) {

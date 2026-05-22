@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Test the CLI handling.
  *
@@ -14,7 +15,7 @@
 /**
  * Test the CLI handling.
  *
- * Copyright 2008 Klarälvdalens Datakonsult AB
+ * Copyright 2008-2026 Klarälvdalens Datakonsult AB
  *
  * See the enclosed file LICENSE for license information (LGPL). If you
  * did not receive this file, see http://www.horde.org/licenses/lgpl21.
@@ -24,13 +25,13 @@
  * @subpackage UnitTests
  * @author     Gunnar Wrobel <wrobel@pardus.de>
  * @license    http://www.horde.org/licenses/lgpl21 LGPL 2.1
+ * @coversNothing
  */
-class Horde_Kolab_Filter_Integration_CliTest
-extends PHPUnit_Framework_TestCase
+class Horde_Kolab_Filter_Integration_CliTest extends PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        $_SERVER['argv'] = array('test');
+        $_SERVER['argv'] = ['test'];
     }
 
     public function tearDown()
@@ -43,7 +44,7 @@ extends PHPUnit_Framework_TestCase
      */
     public function testIncorrectUsage()
     {
-        $_SERVER['argv'] = array($_SERVER['argv'][0]);
+        $_SERVER['argv'] = [$_SERVER['argv'][0]];
         $filter = new Horde_Kolab_Filter();
         $inh = fopen(__DIR__ . '/../fixtures/tiny.eml', 'r');
         try {
@@ -64,10 +65,10 @@ extends PHPUnit_Framework_TestCase
     public function testIncorrectUsageWithInvalidOption()
     {
         setlocale(LC_MESSAGES, 'C');
-        $_SERVER['argv'] = array(
+        $_SERVER['argv'] = [
             $_SERVER['argv'][0],
-            '--recipient'
-        );
+            '--recipient',
+        ];
         $filter = new Horde_Kolab_Filter();
         $inh = fopen(__DIR__ . '/../fixtures/tiny.eml', 'r');
         try {

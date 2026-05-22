@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package Kolab_Filter
  */
@@ -6,7 +7,7 @@
 /**
  * Drops a mail instead of delivering it.
  *
- * Copyright 2008 Klarälvdalens Datakonsult AB
+ * Copyright 2008-2026 Klarälvdalens Datakonsult AB
  *
  * See the enclosed file LICENSE for license information (LGPL). If you
  * did not receive this file, see http://www.horde.org/licenses/lgpl21.
@@ -21,7 +22,7 @@ class Horde_Kolab_Filter_Transport_drop extends Horde_Kolab_Filter_Transport
      *
      * @return DropWrapper Provides a null class as transport.
      */
-    function _createTransport()
+    public function _createTransport()
     {
         $transport = new DropWrapper();
         return $transport;
@@ -32,7 +33,7 @@ class Horde_Kolab_Filter_Transport_drop extends Horde_Kolab_Filter_Transport
  * Defines a wrapper that provides functionality comparable to the
  * Net/*MTP.php classes.
  *
- * Copyright 2008 Klarälvdalens Datakonsult AB
+ * Copyright 2008-2026 Klarälvdalens Datakonsult AB
  *
  * See the enclosed file LICENSE for license information (LGPL). If you
  * did not receive this file, see http://www.horde.org/licenses/lgpl21.
@@ -47,7 +48,7 @@ class DropWrapper
      *
      * @return boolean Always true.
      */
-    function connect()
+    public function connect()
     {
         return true;
     }
@@ -57,7 +58,7 @@ class DropWrapper
      *
      * @return boolean Always true.
      */
-    function disconnect()
+    public function disconnect()
     {
         return true;
     }
@@ -67,7 +68,7 @@ class DropWrapper
      *
      * @return boolean Always true.
      */
-    function mailFrom($sender)
+    public function mailFrom($sender)
     {
         return true;
     }
@@ -77,7 +78,7 @@ class DropWrapper
      *
      * @return boolean Always true.
      */
-    function rcptTo($recipient)
+    public function rcptTo($recipient)
     {
         return true;
     }
@@ -89,7 +90,7 @@ class DropWrapper
      *
      * @return boolean Always true.
      */
-    function _put($cmd)
+    public function _put($cmd)
     {
         return true;
     }
@@ -101,7 +102,7 @@ class DropWrapper
      *
      * @return boolean Always true.
      */
-    function _parseResponse($code)
+    public function _parseResponse($code)
     {
         return true;
     }
@@ -113,7 +114,7 @@ class DropWrapper
      *
      * @return boolean Always true.
      */
-    function _send($data)
+    public function _send($data)
     {
         return true;
     }

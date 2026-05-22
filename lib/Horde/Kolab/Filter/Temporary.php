@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Definition of a temporary storage place for incoming messages.
  *
@@ -13,7 +14,7 @@
 /**
  * Definition of a temporary storage place for incoming messages.
  *
- * Copyright 2010 Klarälvdalens Datakonsult AB
+ * Copyright 2010-2026 Klarälvdalens Datakonsult AB
  *
  * See the enclosed file LICENSE for license information (LGPL). If you did not
  * receive this file, see
@@ -24,6 +25,4 @@
  * @author   Gunnar Wrobel <wrobel@pardus.de>
  * @license  http://www.horde.org/licenses/lgpl21 LGPL 2.1
  */
-interface Horde_Kolab_Filter_Temporary
-{
-}
+interface Horde_Kolab_Filter_Temporary {}

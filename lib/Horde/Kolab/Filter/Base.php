@@ -1,4 +1,5 @@
 <?php
+
 /**
  * A basic definition for a PHP based postfix filter.
  *
@@ -13,7 +14,7 @@
 /**
  * A basic definition for a PHP based postfix filter.
  *
- * Copyright 2004-2010 Klarälvdalens Datakonsult AB
+ * Copyright 2004-2026 Klarälvdalens Datakonsult AB
  *
  * See the enclosed file LICENSE for license information (LGPL). If you
  * did not receive this file, see http://www.horde.org/licenses/lgpl21.
@@ -30,12 +31,12 @@ class Horde_Kolab_Filter_Base
      *
      * @var string
      */
-    var $_id = '';
+    public $_id = '';
 
     /**
      * Configuration.
      *
-     * @param Horde_Kolab_Filter_Configuration 
+     * @param Horde_Kolab_Filter_Configuration
      *
      * @todo Make private
      */
@@ -97,7 +98,7 @@ class Horde_Kolab_Filter_Base
                 "%s starting up (sender=%s, recipients=%s, client_address=%s)",
                 get_class($this),
                 $this->_config->getSender(),
-                join(', ',$this->_config->getRecipients()),
+                join(', ', $this->_config->getRecipients()),
                 $this->_config->getClientAddress()
             )
         );
@@ -109,11 +110,10 @@ class Horde_Kolab_Filter_Base
                 "%s successfully completed (sender=%s, recipients=%s, client_address=%s, id=%s)",
                 get_class($this),
                 $this->_config->getSender(),
-                join(', ',$this->_config->getRecipients()),
+                join(', ', $this->_config->getRecipients()),
                 $this->_config->getClientAddress(),
                 $this->_id
-           )
-       );
+            )
+        );
     }
 }
-

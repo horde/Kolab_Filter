@@ -1,4 +1,7 @@
 <?php
+
+use Horde\Util\Util;
+
 /**
  * Base for PHPUnit scenarios.
  *
@@ -13,7 +16,7 @@
 /**
  * Base for PHPUnit scenarios.
  *
- * Copyright 2008-2017 Horde LLC (http://www.horde.org/)
+ * Copyright 2008-2026 Horde LLC (http://www.horde.org/)
  *
  * See the enclosed file LICENSE for license information (LGPL). If you
  * did not receive this file, see http://www.horde.org/licenses/lgpl21.
@@ -36,22 +39,24 @@ class Horde_Kolab_Test_Filter
      */
     public function runGiven(&$world, $action, $arguments)
     {
-        switch($action) {
-        case 'a set of Kolab test servers':
-            $world['servers'] = array();
-            $world['servers']['server'] = $this->prepareEmptyKolabServer();
-            $world['servers']['freebusy'] = $this->prepareEmptyKolabServer();
-            break;
-        case 'a set of test accounts':
-            foreach ($world['servers'] as $server) {
-                $this->prepareUsers($server['server']);
-            }
-        case 'a set of events where the test resource is busy':
-            foreach ($world['servers'] as $server) {
-                $this->prepareUsers($server);
-            }
-        default:
-            return parent::runGiven($world, $action, $arguments);
+        switch ($action) {
+            case 'a set of Kolab test servers':
+                $world['servers'] = [];
+                $world['servers']['server'] = $this->prepareEmptyKolabServer();
+                $world['servers']['freebusy'] = $this->prepareEmptyKolabServer();
+                break;
+            case 'a set of test accounts':
+                foreach ($world['servers'] as $server) {
+                    $this->prepareUsers($server['server']);
+                }
+                // no break
+            case 'a set of events where the test resource is busy':
+                foreach ($world['servers'] as $server) {
+                    $this->prepareUsers($server);
+                }
+                // no break
+            default:
+                return parent::runGiven($world, $action, $arguments);
         }
     }
 
@@ -66,10 +71,10 @@ class Horde_Kolab_Test_Filter
      */
     public function runWhen(&$world, $action, $arguments)
     {
-        switch($action) {
-        case 'inviting the resource':
-        default:
-            return parent::runWhen($world, $action, $arguments);
+        switch ($action) {
+            case 'inviting the resource':
+            default:
+                return parent::runWhen($world, $action, $arguments);
         }
     }
 
@@ -84,14 +89,14 @@ class Horde_Kolab_Test_Filter
      */
     public function runThen(&$world, $action, $arguments)
     {
-        switch($action) {
-        case 'the invitation is being rejected':
-        case 'the invitation is being accepted':
-        case 'the resource contains the event':
-        case 'the resource is busy during':
-        case 'the response contains':
-        default:
-            return parent::runThen($world, $action, $arguments);
+        switch ($action) {
+            case 'the invitation is being rejected':
+            case 'the invitation is being accepted':
+            case 'the resource contains the event':
+            case 'the resource is busy during':
+            case 'the response contains':
+            default:
+                return parent::runThen($world, $action, $arguments);
         }
     }
 
@@ -124,66 +129,66 @@ class Horde_Kolab_Test_Filter
     {
         $fh = fopen(HORDE_BASE . '/config/conf.php', 'w');
         $data = <<<EOD
-\$conf['use_ssl'] = 2;
-\$conf['server']['name'] = \$_SERVER['SERVER_NAME'];
-\$conf['server']['port'] = \$_SERVER['SERVER_PORT'];
-\$conf['debug_level'] = E_ALL;
-\$conf['umask'] = 077;
-\$conf['compress_pages'] = true;
-\$conf['menu']['always'] = false;
-\$conf['portal']['fixed_blocks'] = array();
-\$conf['imsp']['enabled'] = false;
+            \$conf['use_ssl'] = 2;
+            \$conf['server']['name'] = \$_SERVER['SERVER_NAME'];
+            \$conf['server']['port'] = \$_SERVER['SERVER_PORT'];
+            \$conf['debug_level'] = E_ALL;
+            \$conf['umask'] = 077;
+            \$conf['compress_pages'] = true;
+            \$conf['menu']['always'] = false;
+            \$conf['portal']['fixed_blocks'] = array();
+            \$conf['imsp']['enabled'] = false;
 
-/** Additional config variables required for a clean Horde configuration */
-\$conf['session']['use_only_cookies'] = false;
-\$conf['session']['timeout'] = 0;
-\$conf['cookie']['path'] = '/';
-\$conf['cookie']['domain'] = \$_SERVER['SERVER_NAME'];
-\$conf['use_ssl'] = false;
-\$conf['session']['cache_limiter'] = 'nocache';
-\$conf['session']['name'] = 'Horde';
-\$conf['log']['enabled'] = false;
-\$conf['prefs']['driver'] = 'session';
-\$conf['auth']['driver'] = 'kolab';
-\$conf['share']['driver'] = 'kolab';
-\$conf['debug_level'] = E_ALL;
+            /** Additional config variables required for a clean Horde configuration */
+            \$conf['session']['use_only_cookies'] = false;
+            \$conf['session']['timeout'] = 0;
+            \$conf['cookie']['path'] = '/';
+            \$conf['cookie']['domain'] = \$_SERVER['SERVER_NAME'];
+            \$conf['use_ssl'] = false;
+            \$conf['session']['cache_limiter'] = 'nocache';
+            \$conf['session']['name'] = 'Horde';
+            \$conf['log']['enabled'] = false;
+            \$conf['prefs']['driver'] = 'session';
+            \$conf['auth']['driver'] = 'kolab';
+            \$conf['share']['driver'] = 'kolab';
+            \$conf['debug_level'] = E_ALL;
 
-/** Make the share driver happy */
-\$conf['kolab']['enabled'] = true;
+            /** Make the share driver happy */
+            \$conf['kolab']['enabled'] = true;
 
-/** Ensure we still use the LDAP test driver */
-\$conf['kolab']['server']['driver'] = 'test';
+            /** Ensure we still use the LDAP test driver */
+            \$conf['kolab']['server']['driver'] = 'test';
 
-/** Ensure that we do not trigger on folder update */
-\$conf['kolab']['no_triggering'] = true;
+            /** Ensure that we do not trigger on folder update */
+            \$conf['kolab']['no_triggering'] = true;
 
-/** Storage location for the free/busy system */
-\$conf['fb']['cache_dir']             = '/tmp';
-\$conf['kolab']['freebusy']['server'] = 'https://fb.example.org/freebusy';
+            /** Storage location for the free/busy system */
+            \$conf['fb']['cache_dir']             = '/tmp';
+            \$conf['kolab']['freebusy']['server'] = 'https://fb.example.org/freebusy';
 
-/** Setup the virtual file system for Kolab */
-\$conf['vfs']['params']['all_folders'] = true;
-\$conf['vfs']['type'] = 'kolab';
+            /** Setup the virtual file system for Kolab */
+            \$conf['vfs']['params']['all_folders'] = true;
+            \$conf['vfs']['type'] = 'kolab';
 
-\$conf['kolab']['imap']['server'] = 'localhost';
-\$conf['kolab']['imap']['port']   = 0;
-\$conf['kolab']['imap']['allow_special_users'] = true;
-\$conf['kolab']['filter']['reject_forged_from_header'] = false;
-\$conf['kolab']['filter']['email_domain'] = 'example.org';
-\$conf['kolab']['filter']['privileged_networks'] = '127.0.0.1,192.168.0.0/16';
-\$conf['kolab']['filter']['verify_from_header'] = true;
-\$conf['kolab']['filter']['calendar_id'] = 'calendar';
-\$conf['kolab']['filter']['calendar_pass'] = 'calendar';
-\$conf['kolab']['filter']['lmtp_host'] = 'imap.example.org';
-\$conf['kolab']['filter']['simple_locks'] = true;
-\$conf['kolab']['filter']['simple_locks_timeout'] = 3;
+            \$conf['kolab']['imap']['server'] = 'localhost';
+            \$conf['kolab']['imap']['port']   = 0;
+            \$conf['kolab']['imap']['allow_special_users'] = true;
+            \$conf['kolab']['filter']['reject_forged_from_header'] = false;
+            \$conf['kolab']['filter']['email_domain'] = 'example.org';
+            \$conf['kolab']['filter']['privileged_networks'] = '127.0.0.1,192.168.0.0/16';
+            \$conf['kolab']['filter']['verify_from_header'] = true;
+            \$conf['kolab']['filter']['calendar_id'] = 'calendar';
+            \$conf['kolab']['filter']['calendar_pass'] = 'calendar';
+            \$conf['kolab']['filter']['lmtp_host'] = 'imap.example.org';
+            \$conf['kolab']['filter']['simple_locks'] = true;
+            \$conf['kolab']['filter']['simple_locks_timeout'] = 3;
 
-\$conf['kolab']['filter']['itipreply']['driver'] = 'echo';
-\$conf['kolab']['filter']['itipreply']['params']['host'] = 'localhsot';
-\$conf['kolab']['filter']['itipreply']['params']['port'] = 25;
+            \$conf['kolab']['filter']['itipreply']['driver'] = 'echo';
+            \$conf['kolab']['filter']['itipreply']['params']['host'] = 'localhsot';
+            \$conf['kolab']['filter']['itipreply']['params']['port'] = 25;
 
-\$conf['freebusy']['driver'] = 'Mock';
-EOD;
+            \$conf['freebusy']['driver'] = 'Mock';
+            EOD;
         fwrite($fh, "<?php\n" . $data);
         fclose($fh);
     }
@@ -195,7 +200,7 @@ EOD;
      */
     public function provideFilterUserOne()
     {
-        return array(
+        return [
             'type' => 'Horde_Kolab_Server_Object_Kolab_User',
             Horde_Kolab_Server_Object_Kolab_User::ATTRIBUTE_GIVENNAME => 'Me',
             Horde_Kolab_Server_Object_Kolab_User::ATTRIBUTE_SN => 'Me',
@@ -205,9 +210,9 @@ EOD;
             Horde_Kolab_Server_Object_Kolab_User::ATTRIBUTE_HOMESERVER => 'home.example.org',
             Horde_Kolab_Server_Object_Kolab_User::ATTRIBUTE_IMAPHOST => 'imap.example.org',
             Horde_Kolab_Server_Object_Kolab_User::ATTRIBUTE_FREEBUSYHOST => 'https://fb.example.org/freebusy',
-            Horde_Kolab_Server_Object_Kolab_User::ATTRIBUTE_IPOLICY => array('ACT_REJECT_IF_CONFLICTS'),
-            Horde_Kolab_Server_Object_Kolab_User::ATTRIBUTE_ALIAS => array('me.me@example.org', 'MEME@example.org'),
-        );
+            Horde_Kolab_Server_Object_Kolab_User::ATTRIBUTE_IPOLICY => ['ACT_REJECT_IF_CONFLICTS'],
+            Horde_Kolab_Server_Object_Kolab_User::ATTRIBUTE_ALIAS => ['me.me@example.org', 'MEME@example.org'],
+        ];
     }
 
     /**
@@ -217,7 +222,7 @@ EOD;
      */
     public function provideFilterUserTwo()
     {
-        return array(
+        return [
             'type' => 'Horde_Kolab_Server_Object_Kolab_User',
             Horde_Kolab_Server_Object_Kolab_User::ATTRIBUTE_GIVENNAME => 'You',
             Horde_Kolab_Server_Object_Kolab_User::ATTRIBUTE_SN => 'You',
@@ -227,9 +232,9 @@ EOD;
             Horde_Kolab_Server_Object_Kolab_User::ATTRIBUTE_HOMESERVER => 'home.example.org',
             Horde_Kolab_Server_Object_Kolab_User::ATTRIBUTE_IMAPHOST => 'home.example.org',
             Horde_Kolab_Server_Object_Kolab_User::ATTRIBUTE_FREEBUSYHOST => 'https://fb.example.org/freebusy',
-            Horde_Kolab_Server_Object_Kolab_User::ATTRIBUTE_ALIAS => array('you.you@example.org'),
-            Horde_Kolab_Server_Object_Kolab_User::ATTRIBUTE_DELEGATE => array('wrobel@example.org'),
-        );
+            Horde_Kolab_Server_Object_Kolab_User::ATTRIBUTE_ALIAS => ['you.you@example.org'],
+            Horde_Kolab_Server_Object_Kolab_User::ATTRIBUTE_DELEGATE => ['wrobel@example.org'],
+        ];
     }
 
     /**
@@ -239,7 +244,7 @@ EOD;
      */
     public function provideFilterUserThree()
     {
-        return array(
+        return [
             'type' => 'Horde_Kolab_Server_Object_Kolab_User',
             Horde_Kolab_Server_Object_Kolab_User::ATTRIBUTE_GIVENNAME => 'Else',
             Horde_Kolab_Server_Object_Kolab_User::ATTRIBUTE_SN => 'Else',
@@ -249,8 +254,8 @@ EOD;
             Horde_Kolab_Server_Object_Kolab_User::ATTRIBUTE_HOMESERVER => 'imap.example.org',
             Horde_Kolab_Server_Object_Kolab_User::ATTRIBUTE_IMAPHOST => 'imap.example.org',
             Horde_Kolab_Server_Object_Kolab_User::ATTRIBUTE_FREEBUSYHOST => 'https://fb.example.org/freebusy',
-            Horde_Kolab_Server_Object_Kolab_User::ATTRIBUTE_DELEGATE => array('me@example.org'),
-        );
+            Horde_Kolab_Server_Object_Kolab_User::ATTRIBUTE_DELEGATE => ['me@example.org'],
+        ];
     }
 
     /**
@@ -260,7 +265,7 @@ EOD;
      */
     public function provideFilterCalendarUser()
     {
-        return array(
+        return [
             'type' => 'Horde_Kolab_Server_Object_Kolab_User',
             Horde_Kolab_Server_Object_Kolab_User::ATTRIBUTE_CN => 'calendar',
             Horde_Kolab_Server_Object_Kolab_User::ATTRIBUTE_GIVENNAME => '',
@@ -270,22 +275,29 @@ EOD;
             Horde_Kolab_Server_Object_Kolab_User::ATTRIBUTE_USERPASSWORD => 'calendar',
             Horde_Kolab_Server_Object_Kolab_User::ATTRIBUTE_HOMESERVER => 'home.example.org',
             Horde_Kolab_Server_Object_Kolab_User::ATTRIBUTE_IMAPHOST => 'imap.example.org',
-        );
+        ];
     }
 
-    public function sendFixture($infile, $outfile, $user, $client, $from, $to,
-                                $host, $params = array())
-    {
-        $_SERVER['argv'] = array($_SERVER['argv'][0],
-                                 '--sender=' . $from,
-                                 '--recipient=' . $to,
-                                 '--user=' . $user,
-                                 '--host=' . $host,
-                                 '--client=' . $client);
+    public function sendFixture(
+        $infile,
+        $outfile,
+        $user,
+        $client,
+        $from,
+        $to,
+        $host,
+        $params = []
+    ) {
+        $_SERVER['argv'] = [$_SERVER['argv'][0],
+            '--sender=' . $from,
+            '--recipient=' . $to,
+            '--user=' . $user,
+            '--host=' . $host,
+            '--client=' . $client];
 
         $in = file_get_contents($infile, 'r');
 
-        $tmpfile = Horde_Util::getTempFile('KolabFilterTest');
+        $tmpfile = Util::getTempFile('KolabFilterTest');
         $tmpfh = @fopen($tmpfile, 'w');
         if (empty($params['unmodified_content'])) {
             @fwrite($tmpfh, sprintf($in, $from, $to));
@@ -317,7 +329,7 @@ EOD;
             ob_end_clean();
 
             $out = file_get_contents($outfile);
-            $replace = array(
+            $replace = [
                 '/^Received:.*$/m' => '',
                 '/^Date:.*$/m' => '',
                 '/DTSTAMP:.*$/m' => '',
@@ -325,7 +337,7 @@ EOD;
                 '/^Message-ID.*$/m' => '----',
                 '/boundary=.*$/m' => '----',
                 '/\s/' => '',
-            );
+            ];
             foreach ($replace as $pattern => $replacement) {
                 $output = preg_replace($pattern, $replacement, $output);
                 $out    = preg_replace($pattern, $replacement, $out);

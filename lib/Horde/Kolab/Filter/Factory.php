@@ -1,4 +1,5 @@
 <?php
+
 /**
  * A factory for Kolab_Filter objects.
  *
@@ -13,7 +14,7 @@
 /**
  * A factory for Kolab_Filter objects.
  *
- * Copyright 2010 Klarälvdalens Datakonsult AB
+ * Copyright 2010-2026 Klarälvdalens Datakonsult AB
  *
  * See the enclosed file LICENSE for license information (LGPL). If you did not
  * receive this file, see
@@ -40,56 +41,55 @@ class Horde_Kolab_Filter_Factory
 
         $conf = $configuration->getConf();
         switch ($conf['log']['type']) {
-        case 'file':
-        case 'stream':
-            $append = ($conf['log']['type'] == 'file')
-                ? ($conf['log']['params']['append'] ? 'a+' : 'w+')
-                : null;
-            $format = isset($conf['log']['params']['format'])
-                ? $conf['log']['params']['format']
-                : 'default';
+            case 'file':
+            case 'stream':
+                $append = ($conf['log']['type'] == 'file')
+                    ? ($conf['log']['params']['append'] ? 'a+' : 'w+')
+                    : null;
+                $format = $conf['log']['params']['format']
+                    ?? 'default';
 
-            switch ($format) {
-            case 'custom':
-                $formatter = new Horde_Log_Formatter_Xml(array('format' => $conf['log']['params']['template']));
+                switch ($format) {
+                    case 'custom':
+                        $formatter = new Horde_Log_Formatter_Xml(['format' => $conf['log']['params']['template']]);
+                        break;
+
+                    case 'default':
+                    default:
+                        // Use Horde_Log defaults.
+                        $formatter = null;
+                        break;
+
+                    case 'xml':
+                        $formatter = new Horde_Log_Formatter_Xml();
+                        break;
+                }
+
+                try {
+                    $handler = new Horde_Log_Handler_Stream($conf['log']['name'], $append, $formatter);
+                } catch (Horde_Log_Exception $e) {
+                    return new Horde_Log_Logger(new Horde_Log_Handler_Null());
+                }
+                try {
+                    $handler->setOption('ident', $conf['log']['ident']);
+                } catch (Horde_Log_Exception $e) {
+                }
                 break;
-
-            case 'default':
+            case 'syslog':
+                try {
+                    $handler = new Horde_Log_Handler_Syslog();
+                } catch (Horde_Log_Exception $e) {
+                    return new Horde_Log_Logger(new Horde_Log_Handler_Null());
+                }
+                break;
+            case 'mock':
+                $handler = new Horde_Log_Handler_Mock();
+                break;
+            case 'null':
             default:
-                // Use Horde_Log defaults.
-                $formatter = null;
-                break;
-
-            case 'xml':
-                $formatter = new Horde_Log_Formatter_Xml();
-                break;
-            }
-
-            try {
-                $handler = new Horde_Log_Handler_Stream($conf['log']['name'], $append, $formatter);
-            } catch (Horde_Log_Exception $e) {
+                // Use default null handler.
                 return new Horde_Log_Logger(new Horde_Log_Handler_Null());
-            }
-            try {
-                $handler->setOption('ident', $conf['log']['ident']);
-            } catch (Horde_Log_Exception $e) {
-            }
-            break;
-        case 'syslog':
-            try {
-                $handler = new Horde_Log_Handler_Syslog();
-            } catch (Horde_Log_Exception $e) {
-                return new Horde_Log_Logger(new Horde_Log_Handler_Null());
-            }
-            break;
-        case 'mock':
-            $handler = new Horde_Log_Handler_Mock();
-            break;
-        case 'null':
-        default:
-            // Use default null handler.
-            return new Horde_Log_Logger(new Horde_Log_Handler_Null());
-            break;
+                break;
         }
         if (!defined('Horde_Log::' . $conf['log']['priority'])) {
             $conf['log']['priority'] = 'NOTICE';

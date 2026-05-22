@@ -1,5 +1,7 @@
 <?php
+
 use Horde\Injector\Injector;
+
 /**
  * The main entry point for the Kolab_Filter application.
  *
@@ -14,7 +16,7 @@ use Horde\Injector\Injector;
 /**
  * The main entry point for the Kolab_Filter application.
  *
- * Copyright 2010 Klarälvdalens Datakonsult AB
+ * Copyright 2010-2026 Klarälvdalens Datakonsult AB
  *
  * See the enclosed file LICENSE for license information (LGPL). If you did not
  * receive this file, see
@@ -34,22 +36,28 @@ class Horde_Kolab_Filter
      */
     private $_injector;
 
-    public function __construct(Horde_Injector|Injector $injector = null)
+    public function __construct(Horde_Injector|Injector|null $injector = null)
     {
         if ($injector === null) {
             $this->_injector = new Horde_Injector(new Horde_Injector_TopLevel());
 
             $this->_injector->bindFactory(
-                'Horde_Log_Logger', 'Horde_Kolab_Filter_Factory', 'getLogger'
+                'Horde_Log_Logger',
+                'Horde_Kolab_Filter_Factory',
+                'getLogger'
             );
             $this->_injector->bindFactory(
-                'Horde_Kolab_Server_Composite', 'Horde_Kolab_Filter_Factory', 'getUserDb'
+                'Horde_Kolab_Server_Composite',
+                'Horde_Kolab_Filter_Factory',
+                'getUserDb'
             );
             $this->_injector->bindImplementation(
-                'Horde_Kolab_Filter_Temporary', 'Horde_Kolab_Filter_Temporary_File'
+                'Horde_Kolab_Filter_Temporary',
+                'Horde_Kolab_Filter_Temporary_File'
             );
             $this->_injector->setInstance(
-                'Horde_Kolab_Filter', $this
+                'Horde_Kolab_Filter',
+                $this
             );
         } else {
             $this->_injector = $injector;

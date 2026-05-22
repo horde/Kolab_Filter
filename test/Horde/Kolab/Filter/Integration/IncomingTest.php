@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Test the incoming filter.
  *
@@ -14,7 +15,7 @@
 /**
  * Test the incoming filter.
  *
- * Copyright 2008-2010 Klarälvdalens Datakonsult AB
+ * Copyright 2008-2026 Klarälvdalens Datakonsult AB
  *
  * See the enclosed file LICENSE for license information (LGPL). If you
  * did not receive this file, see http://www.horde.org/licenses/lgpl21.
@@ -24,9 +25,9 @@
  * @subpackage UnitTests
  * @author     Gunnar Wrobel <wrobel@pardus.de>
  * @license    http://www.horde.org/licenses/lgpl21 LGPL 2.1
+ * @coversNothing
  */
-class Horde_Kolab_Filter_Integration_IncomingTest
-extends Horde_Kolab_Filter_StoryTestCase
+class Horde_Kolab_Filter_Integration_IncomingTest extends Horde_Kolab_Filter_StoryTestCase
 {
     /**
      * Test receiving the simple.eml message.

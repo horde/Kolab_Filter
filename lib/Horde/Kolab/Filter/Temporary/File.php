@@ -1,4 +1,5 @@
 <?php
+
 /**
  * File based temporary storage place for incoming messages.
  *
@@ -13,7 +14,7 @@
 /**
  * File based temporary storage place for incoming messages.
  *
- * Copyright 2004-2010 Klarälvdalens Datakonsult AB
+ * Copyright 2004-2026 Klarälvdalens Datakonsult AB
  *
  * See the enclosed file LICENSE for license information (LGPL). If you did not
  * receive this file, see
@@ -24,22 +25,21 @@
  * @author   Gunnar Wrobel <wrobel@pardus.de>
  * @license  http://www.horde.org/licenses/lgpl21 LGPL 2.1
  */
-class Horde_Kolab_Filter_Temporary_File
-implements Horde_Kolab_Filter_Temporary
+class Horde_Kolab_Filter_Temporary_File implements Horde_Kolab_Filter_Temporary
 {
     /**
      * A temporary buffer file for storing the message.
      *
      * @var string
      */
-    var $_tmpfile;
+    public $_tmpfile;
 
     /**
      * The file handle for the temporary file.
      *
      * @var int
      */
-    var $_tmpfh;
+    public $_tmpfh;
 
     /**
      * Configuration.
@@ -87,7 +87,7 @@ implements Horde_Kolab_Filter_Temporary
             );
         }
 
-        register_shutdown_function(array($this, 'cleanup'));
+        register_shutdown_function([$this, 'cleanup']);
     }
 
     /**

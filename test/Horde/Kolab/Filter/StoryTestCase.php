@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Base for scenario based testing of this package.
  *
@@ -14,7 +15,7 @@
 /**
  * Base for scenario based testing of this package.
  *
- * Copyright 2010 Klarälvdalens Datakonsult AB
+ * Copyright 2010-2026 Klarälvdalens Datakonsult AB
  *
  * See the enclosed file LICENSE for license information (LGPL). If you
  * did not receive this file, see http://www.horde.org/licenses/lgpl21.
@@ -24,9 +25,9 @@
  * @subpackage UnitTests
  * @author     Gunnar Wrobel <wrobel@pardus.de>
  * @license    http://www.horde.org/licenses/lgpl21 LGPL 2.1
+ * @coversNothing
  */
-class Horde_Kolab_Filter_StoryTestCase
-extends PHPUnit_Extensions_Story_TestCase
+class Horde_Kolab_Filter_StoryTestCase extends PHPUnit_Extensions_Story_TestCase
 {
     public function setUp()
     {
@@ -44,45 +45,46 @@ extends PHPUnit_Extensions_Story_TestCase
      */
     public function runGiven(&$world, $action, $arguments)
     {
-        switch($action) {
-        case 'an incoming message on host':
-            $world['hostname'] = $arguments[0];
-            $world['type'] = 'Incoming';
-            break;
-        case 'the SMTP sender address is':
-            $world['sender'] = $arguments[0];
-            break;
-        case 'the SMTP recipient address is':
-            $world['recipient'] = $arguments[0];
-            break;
-        case 'the client address is':
-            $world['client'] = $arguments[0];
-            break;
-        case 'the hostname is':
-            $world['hostname'] = $arguments[0];
-            break;
-        case 'the unmodified message content is':
-            $world['infile'] = $arguments[0];
-            $world['fp']     = fopen($world['infile'], 'r');
-            break;
-        case 'the modified message template is':
-            $world['infile'] = $arguments[0];
-            $world['fp']     = fopen($world['infile'], 'r');
-            stream_filter_register(
-                'addresses', 'Horde_Kolab_Filter_Helper_AddressFilter'
-            );
-            stream_filter_append(
-                $world['fp'],
-                'addresses',
-                STREAM_FILTER_READ,
-                array(
-                    'recipient' => $world['recipient'],
-                    'sender'    => $world['sender']
-                )
-            );
-            break;
-        default:
-            return $this->notImplemented($action);
+        switch ($action) {
+            case 'an incoming message on host':
+                $world['hostname'] = $arguments[0];
+                $world['type'] = 'Incoming';
+                break;
+            case 'the SMTP sender address is':
+                $world['sender'] = $arguments[0];
+                break;
+            case 'the SMTP recipient address is':
+                $world['recipient'] = $arguments[0];
+                break;
+            case 'the client address is':
+                $world['client'] = $arguments[0];
+                break;
+            case 'the hostname is':
+                $world['hostname'] = $arguments[0];
+                break;
+            case 'the unmodified message content is':
+                $world['infile'] = $arguments[0];
+                $world['fp']     = fopen($world['infile'], 'r');
+                break;
+            case 'the modified message template is':
+                $world['infile'] = $arguments[0];
+                $world['fp']     = fopen($world['infile'], 'r');
+                stream_filter_register(
+                    'addresses',
+                    'Horde_Kolab_Filter_Helper_AddressFilter'
+                );
+                stream_filter_append(
+                    $world['fp'],
+                    'addresses',
+                    STREAM_FILTER_READ,
+                    [
+                        'recipient' => $world['recipient'],
+                        'sender'    => $world['sender'],
+                    ]
+                );
+                break;
+            default:
+                return $this->notImplemented($action);
         }
     }
 
@@ -97,21 +99,21 @@ extends PHPUnit_Extensions_Story_TestCase
      */
     public function runWhen(&$world, $action, $arguments)
     {
-        switch($action) {
-        case 'handling the message':
-            global $conf;
-            $conf['server']['mock'] = true;
-            //@todo: Fix guid => dn here
-            $conf['server']['data'] = array('dn=example' => array('dn' => 'dn=example', 'data' => array('mail' => array('me@example.org'), 'kolabHomeServer' => array('localhost'), 'objectClass' => array('kolabInetOrgPerson'), 'guid' => 'dn=example')));
-            $_SERVER['argv'] = $this->_prepareArguments($world);
-            $filter = new Horde_Kolab_Filter();
-            ob_start();
-            $result = $filter->main($world['type'], $world['fp'], 'echo');
-            $world['output'] = ob_get_contents();
-            ob_end_clean();
-            break;
-        default:
-            return $this->notImplemented($action);
+        switch ($action) {
+            case 'handling the message':
+                global $conf;
+                $conf['server']['mock'] = true;
+                //@todo: Fix guid => dn here
+                $conf['server']['data'] = ['dn=example' => ['dn' => 'dn=example', 'data' => ['mail' => ['me@example.org'], 'kolabHomeServer' => ['localhost'], 'objectClass' => ['kolabInetOrgPerson'], 'guid' => 'dn=example']]];
+                $_SERVER['argv'] = $this->_prepareArguments($world);
+                $filter = new Horde_Kolab_Filter();
+                ob_start();
+                $result = $filter->main($world['type'], $world['fp'], 'echo');
+                $world['output'] = ob_get_contents();
+                ob_end_clean();
+                break;
+            default:
+                return $this->notImplemented($action);
         }
     }
 
@@ -126,37 +128,37 @@ extends PHPUnit_Extensions_Story_TestCase
      */
     public function runThen(&$world, $action, $arguments)
     {
-        switch($action) {
-        case 'the result will be the same as the content in':
-            $out = file_get_contents($arguments[0]);
-            $this->_cleanAndCompareOutput($out, $world['output']);
-            break;
-        default:
-            return $this->notImplemented($action);
+        switch ($action) {
+            case 'the result will be the same as the content in':
+                $out = file_get_contents($arguments[0]);
+                $this->_cleanAndCompareOutput($out, $world['output']);
+                break;
+            default:
+                return $this->notImplemented($action);
         }
     }
 
     private function _prepareArguments(&$world)
     {
-        $recipient = isset($world['recipient']) ? $world['recipient'] : '';
-        $sender    = isset($world['sender']) ? $world['sender'] : '';
-        $user      = isset($world['user']) ? $world['user'] : '';
-        $hostname  = isset($world['hostname']) ? $world['hostname'] : '';
-        $client    = isset($world['client']) ? $world['client'] : '';
-        return array(
+        $recipient = $world['recipient'] ?? '';
+        $sender    = $world['sender'] ?? '';
+        $user      = $world['user'] ?? '';
+        $hostname  = $world['hostname'] ?? '';
+        $client    = $world['client'] ?? '';
+        return [
             $_SERVER['argv'][0],
             '--sender=' . $sender,
             '--recipient=' . $recipient,
             '--user=' . $user,
             '--host=' . $hostname,
-            '--client=' . $client
-        );
+            '--client=' . $client,
+        ];
 
     }
 
     private function _cleanAndCompareOutput($received, $expected)
     {
-        $replace = array(
+        $replace = [
             '/^Received:.*$/m' => '',
             '/^Date:.*$/m' => '',
             '/DTSTAMP:.*$/m' => '',
@@ -164,7 +166,7 @@ extends PHPUnit_Extensions_Story_TestCase
             '/^Message-ID.*$/m' => '----',
             '/boundary=.*$/m' => '----',
             '/\s/' => '',
-        );
+        ];
         foreach ($replace as $pattern => $replacement) {
             $received = preg_replace($pattern, $replacement, $received);
             $expected = preg_replace($pattern, $replacement, $expected);

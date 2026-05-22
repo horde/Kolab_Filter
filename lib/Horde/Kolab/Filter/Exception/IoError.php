@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This class provides an error thrown when an I/O error occured.
  *
@@ -13,7 +14,7 @@
 /**
  * This class provides an error thrown when an I/O error occured.
  *
- * Copyright 2010 Klarälvdalens Datakonsult AB
+ * Copyright 2010-2026 Klarälvdalens Datakonsult AB
  *
  * See the enclosed file LICENSE for license information (LGPL). If you
  * did not receive this file, see http://www.horde.org/licenses/lgpl21.
@@ -23,8 +24,7 @@
  * @author   Gunnar Wrobel <wrobel@pardus.de>
  * @license  http://www.horde.org/licenses/lgpl21 LGPL 2.1
  */
-class Horde_Kolab_Filter_Exception_IoError
-extends Horde_Kolab_Filter_Exception
+class Horde_Kolab_Filter_Exception_IoError extends Horde_Kolab_Filter_Exception
 {
     /**
      * Construct the exception
@@ -32,12 +32,12 @@ extends Horde_Kolab_Filter_Exception
      * @param string $msg
      * @param Exception $previous
      */
-    public function __construct($msg = '', Exception $previous = null)
+    public function __construct($msg = '', ?Exception $previous = null)
     {
         parent::__construct(
             $msg,
-            Horde_Kolab_Filter_Exception::OUT_LOG |
-            Horde_Kolab_Filter_Exception::EX_IOERR,
+            Horde_Kolab_Filter_Exception::OUT_LOG
+            | Horde_Kolab_Filter_Exception::EX_IOERR,
             $previous
         );
     }

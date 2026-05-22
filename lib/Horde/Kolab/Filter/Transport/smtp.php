@@ -1,8 +1,9 @@
 <?php
+
 /**
  * Provides SMTP for delivering mail.
  *
- * Copyright 2004-2008 Klarälvdalens Datakonsult AB
+ * Copyright 2004-2026 Klarälvdalens Datakonsult AB
  * Copyright 2026 Horde LLC (http://www.horde.org/)
  *
  * See the enclosed file LICENSE for license information (LGPL). If you
@@ -19,7 +20,7 @@ class Horde_Kolab_Filter_Transport_smtp extends Horde_Kolab_Filter_Transport
      *
      * @return Horde_Smtp The SMTP handler.
      */
-    function _createTransport()
+    public function _createTransport()
     {
         if (!isset($this->_params['host'])) {
             $this->_params['host'] = '127.0.0.1';
@@ -34,7 +35,7 @@ class Horde_Kolab_Filter_Transport_smtp extends Horde_Kolab_Filter_Transport
             'host' => $this->_params['host'],
             'port' => $this->_params['port'],
             'secure' => false,  // Kolab uses local unencrypted SMTP
-            'timeout' => $this->_params['timeout'] ?? 10
+            'timeout' => $this->_params['timeout'] ?? 10,
         ]);
 
         return $transport;

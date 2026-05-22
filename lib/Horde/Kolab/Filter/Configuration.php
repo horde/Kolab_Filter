@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright 2008 Klarälvdalens Datakonsult AB
+ * Copyright 2008-2026 Klarälvdalens Datakonsult AB
  *
  * See the enclosed file LICENSE for license information (LGPL). If you did not
  * receive this file, see
@@ -34,7 +35,7 @@ class Horde_Kolab_Filter_Configuration
      *
      * @var array
      */
-    private $_recipients = array();
+    private $_recipients = [];
 
     /**
      * The client host trying to send the message.
@@ -67,7 +68,7 @@ class Horde_Kolab_Filter_Configuration
     /**
      * Command line parser.
      *
-     * @param Horde_Kolab_Filter_Cli 
+     * @param Horde_Kolab_Filter_Cli
      */
     private $_cli;
 
@@ -105,7 +106,8 @@ class Horde_Kolab_Filter_Configuration
 
         if (!empty($conf['kolab']['filter']['locale_path'])
             && !empty($conf['kolab']['filter']['locale'])) {
-            Horde_Nls::setTextdomain('Kolab_Filter', $conf['kolab']['filter']['locale_path']);
+            bindtextdomain('Kolab_Filter', $conf['kolab']['filter']['locale_path']);
+            textdomain('Kolab_Filter');
             setlocale(LC_ALL, $conf['kolab']['filter']['locale']);
         }
 
@@ -150,7 +152,7 @@ class Horde_Kolab_Filter_Configuration
             $conf['log']['type']             = 'syslog';
             $conf['log']['name']             = LOG_MAIL;
             $conf['log']['ident']            = 'kolabfilter';
-            $conf['log']['params']           = array();
+            $conf['log']['params']           = [];
         }
 
         $this->_conf = $conf;
