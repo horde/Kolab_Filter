@@ -8,8 +8,7 @@ description: >-
 list: dev
 type: library
 authors:
-  -
-    name: Gunnar Wrobel
+  - name: Gunnar Wrobel
     user: wrobel
     email: p@rdus.de
     active: true
@@ -45,3 +44,76 @@ dependencies:
       horde/test: ^3
 keywords: []
 vendor: horde
+ci-platform:
+  '8.0':
+    - php: ^7.4 || ^8
+    - composer-plugin-api: ~2.0
+    - ext-dom
+    - ext-gettext
+    - ext-hash
+    - ext-json
+    - ext-pcre
+    - ext-session
+    - ext-xml
+  '8.1':
+    - php: ^7.4 || ^8
+    - composer-plugin-api: ~2.0
+    - ext-dom
+    - ext-gettext
+    - ext-hash
+    - ext-json
+    - ext-pcre
+    - ext-session
+    - ext-xml
+  '8.2':
+    - php: ^7.4 || ^8
+    - composer-plugin-api: ~2.0
+    - ext-dom
+    - ext-gettext
+    - ext-hash
+    - ext-json
+    - ext-pcre
+    - ext-session
+    - ext-xml
+  '8.3':
+    - php: ^7.4 || ^8
+    - composer-plugin-api: ~2.0
+    - ext-dom
+    - ext-gettext
+    - ext-hash
+    - ext-json
+    - ext-pcre
+    - ext-session
+    - ext-xml
+  '8.4':
+    - php: ^7.4 || ^8
+    - composer-plugin-api: ~2.0
+    - ext-dom
+    - ext-gettext
+    - ext-hash
+    - ext-json
+    - ext-pcre
+    - ext-session
+    - ext-xml
+  '8.5':
+    - php: ^7.4 || ^8
+    - composer-plugin-api: ~2.0
+    - ext-dom
+    - ext-gettext
+    - ext-hash
+    - ext-json
+    - ext-pcre
+    - ext-session
+    - ext-xml
+  '8.6':
+    - php: ^7.4 || ^8
+    - composer-plugin-api: ~2.0
+    - ext-dom
+    - ext-gettext
+    - ext-hash
+    - ext-json
+    - ext-pcre
+    - ext-session
+    - ext-xml
+ci-platform-flags:
+  needs_installer_plugin: true
